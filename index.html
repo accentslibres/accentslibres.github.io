@@ -89,108 +89,20 @@ Le point est, lui aussi, plus pratique.
 
 </div>
 
-
 <script>
 (function(){
-  // ★ 네 웹앱 URL 그대로 사용
-  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxVpQzLFf1V9hKBtIpOBnlv5XDRiAzZVxE5ybaWWMWNmq9tkPSfFVIBDIAie2uoJ6Tf/exec';
-
-  // 요소 잡기 (id가 다르면 자동으로 보완)
-  const $reviewsSec = document.getElementById('reviews');
-  const $form  = document.getElementById('reviewForm');
-  const $name  = document.getElementById('rvName');
-  const $text  = document.getElementById('rvText');
-  const $stars = document.getElementById('rvStars');
-  let   $list  = document.getElementById('rvList') || document.getElementById('reviewList') || ($reviewsSec && $reviewsSec.querySelector('ul'));
-
-  // 리스트 컨테이너가 없으면 만들어 붙임 (UI 유지)
-  if (!$list && $reviewsSec) {
-    $list = document.createElement('ul');
-    $list.id = 'reviewList';
-    $list.style.listStyle = 'none';
-    $list.style.padding = '0';
-    $list.style.margin = '0';
-    $list.style.display = 'grid';
-    $list.style.gap = '12px';
-    $reviewsSec.appendChild($list);
+  function ensurePadId(){
+    // Prefer existing #output from Teranama
+    var t = document.getElementById('output') || document.querySelector('textarea');
+    if (t && !t.id) t.id = 'pad';
+    else if (t && t.id !== 'pad') t.id = 'pad';
+    // best-effort input-friendly flags
+    t && (t.autocomplete = 'off', t.autocorrect = 'off', t.autocapitalize = 'off', t.spellcheck = false);
   }
-
-  // 핵심 요소 없으면 조용히 종료(다른 기능 영향 X)
-  if (!$reviewsSec || !$form || !$stars || !$list) return;
-
-  // 별점 UI
-  let starVal = 0;
-  function renderStars(v){
-    $stars.innerHTML='';
-    for (let i=1;i<=5;i++){
-      const s=document.createElement('span');
-      s.textContent = i<=v ? '★' : '☆';
-      s.style.color = i<=v ? '#f7b500' : '#ccc';
-      s.style.fontSize = '20px';
-      s.style.marginLeft = i===1 ? '0' : '2px';
-      s.dataset.v = i;
-      $stars.appendChild(s);
-    }
-  }
-  $stars.addEventListener('mousemove',e=>{ const t=e.target.closest('span'); if(t) renderStars(+t.dataset.v); });
-  $stars.addEventListener('mouseleave',()=>renderStars(starVal||0));
-  $stars.addEventListener('click',e=>{ const t=e.target.closest('span'); if(!t) return; starVal=+t.dataset.v; renderStars(starVal); });
-  renderStars(0);
-
-  // 유틸 + 카드
-  function escapeHtml(s){ return String(s).replace(/[&<>"']/g, m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
-  function cardHTML(it){
-    const st = Math.max(0, Math.min(5, parseInt(it.stars||'0',10) || 0));
-    const star = '★'.repeat(st) + '☆'.repeat(5-st);
-    const name = it.name || 'Anonyme';
-    const text = it.text || '';
-    return `<li style="background:#fff;border-radius:14px;padding:16px;box-shadow:0 1px 6px rgba(0,0,0,.08)">
-      <div style="color:#f7b500;font-size:18px;line-height:1">${star}</div>
-      <div style="margin-top:8px;font-size:18px;line-height:1.6">${escapeHtml(text)}</div>
-      <div style="margin-top:8px;color:#777;font-size:14px">— ${escapeHtml(name)}</div>
-    </li>`;
-  }
-
-  // JSONP 콜백: 시트 → 화면
-  window.__onReviews = function(arr){
-    const list = Array.isArray(arr) ? arr.slice().reverse() : [];
-    $list.innerHTML = list.map(cardHTML).join('');
-    if (window.setReviewCount) window.setReviewCount(list.length); // 상단 "게시글 n개" 갱신용
-  };
-  function loadReviewsJSONP(){
-    const s = document.createElement('script');
-    s.src = SCRIPT_URL + '?n=20&callback=__onReviews&ts=' + Date.now(); // CORS 우회 + 캐시 방지
-    document.head.appendChild(s);
-  }
-  document.addEventListener('DOMContentLoaded', loadReviewsJSONP);
-
-  // 제출 → 시트 저장(no-cors)
-  $form.addEventListener('submit', async (e)=>{
-    e.preventDefault();
-    const name = ($name && $name.value || '').trim() || 'Anonyme';
-    const text = ($text && $text.value || '').trim();
-    if (!starVal){ alert('Choisissez une note.'); return; }
-    if (!text){ alert('Saisissez votre avis.'); return; }
-
-    // 화면에 즉시 추가(낙관적 UI)
-    const item = { name, stars: starVal, text };
-    $list.insertAdjacentHTML('afterbegin', cardHTML(item));
-
-    // 시트 저장 (응답은 읽지 않음)
-    try{
-      await fetch(SCRIPT_URL, { method:'POST', mode:'no-cors', body: JSON.stringify(item) });
-      // 저장 직후 1초 뒤 다시 목록 동기화(시트 반영 지연 대비)
-      setTimeout(loadReviewsJSONP, 1200);
-    }catch(e){}
-
-    // reset
-    if ($name) $name.value = '';
-    if ($text) $text.value = '';
-    starVal = 0; renderStars(0);
-  });
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', ensurePadId);
+  else ensurePadId();
 })();
 </script>
-
 <script>(function(){ 
   var t = document.getElementById('output') || document.querySelector('textarea');
   if (t){ 
@@ -598,90 +510,42 @@ pad.addEventListener('keyup',    cancelOnMove, true);
 
 <script>
 (function(){
-  const LS_KEY='accentslibres.reviews.v2';
+  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxVpQzLFf1V9hKBtIpOBnlv5XDRiAzZVxE5ybaWWMWNmq9tkPSfFVIBDIAie2uoJ6Tf/exec';
+  const $reviewsSec = document.getElementById('reviews');
+  const $form  = document.getElementById('reviewForm');
+  const $name  = document.getElementById('rvName');
+  const $text  = document.getElementById('rvText');
+  const $stars = document.getElementById('rvStars');
+  let   $list  = document.getElementById('rvList') || document.getElementById('reviewList') || ($reviewsSec && $reviewsSec.querySelector('ul'));
 
-  // 샘플(첫 방문 시 목록 채움)
-  const samples=[
-    {name:'Giho',stars:5,text:'Merci d’avoir découvert Accents Libres. Vos retours aideront beaucoup au développement. Libérez les accents! Merci !'},
-  ];
+  if (!$list && $reviewsSec) {
+    $list = document.createElement('ul');
+    $list.id = 'reviewList';
+    $list.style.listStyle='none'; $list.style.padding='0'; $list.style.margin='0'; $list.style.display='grid'; $list.style.gap='12px';
+    $reviewsSec.appendChild($list);
+  }
 
-  const $form=document.getElementById('reviewForm');
-  const $name=document.getElementById('rvName');
-  const $text=document.getElementById('rvText');
-  const $list=document.getElementById('rvList');
-  const $stars=document.getElementById('rvStars');
+  if (!$reviewsSec || !$form || !$stars || !$list) return;
 
-  // 별점 위젯
-  let starVal=0;
+  let starVal = 0;
   function renderStars(v){
     $stars.innerHTML='';
-    for(let i=1;i<=5;i++){
-      const s=document.createElement('span');
-      s.textContent=i<=v?'★':'☆';
-      s.style.color='#f7b500';
-      s.style.marginLeft=i===1?'0':'2px';
-      s.dataset.v=i;
-      $stars.appendChild(s);
-    }
+    for(let i=1;i<=5;i++){ const s=document.createElement('span'); s.textContent=i<=v?'★':'☆'; s.style.color=i<=v?'#f7b500':'#ccc'; s.style.fontSize='20px'; s.style.marginLeft=i===1?'0':'2px'; s.dataset.v=i; $stars.appendChild(s);}
   }
-  $stars.addEventListener('mousemove',e=>{
-    const t=e.target.closest('span'); if(t) renderStars(+t.dataset.v);
-  });
+  $stars.addEventListener('mousemove',e=>{const t=e.target.closest('span'); if(t) renderStars(+t.dataset.v);});
   $stars.addEventListener('mouseleave',()=>renderStars(starVal||0));
-  $stars.addEventListener('click',e=>{
-    const t=e.target.closest('span'); if(!t) return;
-    starVal=+t.dataset.v; renderStars(starVal);
-  });
+  $stars.addEventListener('click',e=>{const t=e.target.closest('span'); if(!t) return; starVal=+t.dataset.v; renderStars(starVal);});
   renderStars(0);
 
-  // 저장/로드
-  function load(){
-    try{
-      const raw=localStorage.getItem(LS_KEY);
-      return raw?JSON.parse(raw):null;
-    }catch{ return null; }
-  }
-  function save(list){ localStorage.setItem(LS_KEY, JSON.stringify(list)); }
+  function escapeHtml(s){ return String(s).replace(/[&<>"']/g, m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
+  function cardHTML(it){ const st=Math.max(0,Math.min(5,parseInt(it.stars||'0',10)||0)); const star='★'.repeat(st)+'☆'.repeat(5-st); const name=it.name||'Anonyme'; const text=it.text||''; return `<div style="background:#f3f1e7;border-radius:14px;padding:18px;"><div style="color:#f7b500;font-size:18px;line-height:1">${star}</div><div style="font-size:18px;margin-top:6px">${escapeHtml(text)}</div><div style="font-size:14px;color:#777;margin-top:8px">— ${escapeHtml(name)}</div></div>`; }
 
-  // 렌더
-  function escapeHtml(s){return String(s).replace(/[&<>"']/g, m=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
-  function render(list){
-    $list.innerHTML='';
-    (list||[]).forEach(it=>{
-      const card=document.createElement('div');
-      card.style.cssText='background:#f3f1e7;border-radius:14px;padding:18px;';
-      const star='★'.repeat(it.stars)+'☆'.repeat(5-it.stars);
-      card.innerHTML=
-        `<div style="color:#f7b500;font-size:18px;line-height:1">${star}</div>
-         <div style="font-size:18px;margin-top:6px">${escapeHtml(it.text)}</div>
-         <div style="font-size:14px;color:#777;margin-top:8px">— ${escapeHtml(it.name||'Anonyme')}</div>`;
-      $list.appendChild(card);
-    });
-  }
+  window.__onReviews = function(arr){ try{ const ordered=Array.isArray(arr)?arr.slice().reverse():[]; $list.innerHTML = ordered.map(cardHTML).join(''); if (window.setReviewCount) window.setReviewCount(ordered.length); }catch(e){} };
 
-  // 초기화(첫 로드에 샘플 주입)
-  (function init(){
-    const first=load();
-    if(!first){ save(samples); render(samples); }
-    else render(first);
-  })();
+  function loadReviewsJSONP(){ const s=document.createElement('script'); s.src = SCRIPT_URL + '?n=20&callback=__onReviews&ts=' + Date.now(); document.head.appendChild(s);}
+  document.addEventListener('DOMContentLoaded', loadReviewsJSONP);
 
-  // 제출
-  $form.addEventListener('submit',e=>{
-    e.preventDefault();
-    const name=$name.value.trim();
-    const text=$text.value.trim();
-    if(!starVal){ alert('Choisissez une note.'); return; }
-    if(!text){ alert('Saisissez votre avis.'); return; }
-
-    const data=load()||[];
-    data.unshift({name,stars:starVal,text});
-    save(data);
-    render(data);
-
-    // reset
-    $name.value=''; $text.value=''; starVal=0; renderStars(0);
-  });
+  $form.addEventListener('submit', async (e)=>{ e.preventDefault(); const name=($name&&$name.value||'').trim()||'Anonyme'; const text=($text&&$text.value||'').trim(); if(!starVal){alert('Choisissez une note.');return;} if(!text){alert('Saisissez votre avis.');return;} const item={name, stars:starVal, text}; $list.insertAdjacentHTML('afterbegin', cardHTML(item)); try{ await fetch(SCRIPT_URL,{method:'POST', mode:'no-cors', body: JSON.stringify(item)}); setTimeout(loadReviewsJSONP, 1200); }catch(e){} if($name) $name.value=''; if($text) $text.value=''; starVal=0; renderStars(0); });
 })();
 </script>
 <style>
@@ -706,21 +570,15 @@ pad.addEventListener('keyup',    cancelOnMove, true);
 
 <script>
 (function(){
-  const LS_KEY='accentslibres.reviews.v2';
   const stage   = document.getElementById('stage');
   const reviews = document.getElementById('reviews');
   const fitwrap = document.getElementById('fitwrap');
   if(!stage || !reviews || !fitwrap) return;
 
-  // 기존 cue/fab/dock 제거
   document.getElementById('reviewsCue')?.remove();
   document.getElementById('fabReviews')?.remove();
   document.getElementById('reviewsDock')?.remove();
 
-  // 리뷰 개수
-  let n=0; try{ const a=JSON.parse(localStorage.getItem(LS_KEY)||'[]'); n=Array.isArray(a)?a.length:0; }catch(e){}
-
-  // --- 도킹 컨테이너(무대 아래, fitwrap 바깥) ---
   const dock = document.createElement('div');
   dock.id = 'reviewsDock';
   dock.style.cssText = 'max-width:1024px;margin:-60px auto 34px;display:flex;justify-content:center;';
@@ -729,12 +587,17 @@ pad.addEventListener('keyup',    cancelOnMove, true);
   cue.id = 'reviewsCue';
   cue.style.cssText = 'position:relative;padding:8px 14px;border-radius:999px;background:rgba(0,0,0,.65);color:#fff;font:600 14px var(--ui-font);display:flex;align-items:center;gap:8px;cursor:pointer;backdrop-filter:saturate(1.2) blur(2px);box-shadow:0 4px 10px rgba(0,0,0,.25);';
   cue.innerHTML = `<span class="chev" style="font-size:14px;line-height:1;">▼</span>
-                   <span>Voir les avis${n?` (${n})`:''}</span>`;
+                   <span id="rvCueText">Voir les avis</span>`;
   cue.addEventListener('click',()=>reviews.scrollIntoView({behavior:'smooth', block:'start'}));
   dock.appendChild(cue);
 
-  // ✅ fitwrap "바깥"으로 삽입(옆이 아니라 아래 줄에 위치)
   fitwrap.parentNode.insertBefore(dock, fitwrap.nextSibling);
+
+  // Expose updater so reviews script can set count later
+  window.setReviewCount = function(n){
+    const el = document.getElementById('rvCueText');
+    if (el) el.textContent = n ? `Voir les avis (${n})` : 'Voir les avis';
+  };
 })();
 </script>
 
