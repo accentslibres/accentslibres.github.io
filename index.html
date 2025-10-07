@@ -96,7 +96,7 @@ Le point est, lui aussi, plus pratique.
   const $form=document.getElementById('reviewForm');
   const $name=document.getElementById('rvName');
   const $text=document.getElementById('rvText');
-  const $list=document.getElementById('rvList');
+  const $list = document.getElementById('rvList') || document.getElementById('reviewList');
   const $stars=document.getElementById('rvStars');
   let starVal=0;
 
@@ -569,7 +569,7 @@ pad.addEventListener('keyup',    cancelOnMove, true);
   const $form=document.getElementById('reviewForm');
   const $name=document.getElementById('rvName');
   const $text=document.getElementById('rvText');
-  const $list=document.getElementById('rvList');
+  const $list = document.getElementById('rvList') || document.getElementById('reviewList');
   const $stars=document.getElementById('rvStars');
 
   // 별점 위젯
