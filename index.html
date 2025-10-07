@@ -559,114 +559,6 @@ pad.addEventListener('keyup',    cancelOnMove, true);
 
 <script>
 (function(){
-  const LS_KEY='accentslibres.reviews.v2';
-
-  // 샘플(첫 방문 시 목록 채움)
-  const samples=[
-    {name:'Giho',stars:5,text:'Merci d’avoir découvert Accents Libres. Vos retours aideront beaucoup au développement. Libérez les accents! Merci !'},
-  ];
-
-  const $form=document.getElementById('reviewForm');
-  const $name=document.getElementById('rvName');
-  const $text=document.getElementById('rvText');
-  const $list = document.getElementById('rvList') || document.getElementById('reviewList');
-  const $stars=document.getElementById('rvStars');
-
-  // 별점 위젯
-  let starVal=0;
-  function renderStars(v){
-    $stars.innerHTML='';
-    for(let i=1;i<=5;i++){
-      const s=document.createElement('span');
-      s.textContent=i<=v?'★':'☆';
-      s.style.color='#f7b500';
-      s.style.marginLeft=i===1?'0':'2px';
-      s.dataset.v=i;
-      $stars.appendChild(s);
-    }
-  }
-  $stars.addEventListener('mousemove',e=>{
-    const t=e.target.closest('span'); if(t) renderStars(+t.dataset.v);
-  });
-  $stars.addEventListener('mouseleave',()=>renderStars(starVal||0));
-  $stars.addEventListener('click',e=>{
-    const t=e.target.closest('span'); if(!t) return;
-    starVal=+t.dataset.v; renderStars(starVal);
-  });
-  renderStars(0);
-
-  // 저장/로드
-  function load(){
-    try{
-      const raw=localStorage.getItem(LS_KEY);
-      return raw?JSON.parse(raw):null;
-    }catch{ return null; }
-  }
-  function save(list){ localStorage.setItem(LS_KEY, JSON.stringify(list)); }
-
-  // 렌더
-  function escapeHtml(s){return String(s).replace(/[&<>"']/g, m=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
-  function render(list){
-    $list.innerHTML='';
-    (list||[]).forEach(it=>{
-      const card=document.createElement('div');
-      card.style.cssText='background:#f3f1e7;border-radius:14px;padding:18px;';
-      const star='★'.repeat(it.stars)+'☆'.repeat(5-it.stars);
-      card.innerHTML=
-        `<div style="color:#f7b500;font-size:18px;line-height:1">${star}</div>
-         <div style="font-size:18px;margin-top:6px">${escapeHtml(it.text)}</div>
-         <div style="font-size:14px;color:#777;margin-top:8px">— ${escapeHtml(it.name||'Anonyme')}</div>`;
-      $list.appendChild(card);
-    });
-  }
-
-  // 초기화(첫 로드에 샘플 주입)
-  (function init(){
-    const first=load();
-    if(!first){ save(samples); render(samples); }
-    else render(first);
-  })();
-
-  // 제출
-  $form.addEventListener('submit',e=>{
-    e.preventDefault();
-    const name=$name.value.trim();
-    const text=$text.value.trim();
-    if(!starVal){ alert('Choisissez une note.'); return; }
-    if(!text){ alert('Saisissez votre avis.'); return; }
-
-    const data=load()||[];
-    data.unshift({name,stars:starVal,text});
-    save(data);
-    render(data);
-
-    // reset
-    $name.value=''; $text.value=''; starVal=0; renderStars(0);
-  });
-})();
-</script>
-<style>
-  /* Stage 아래 도킹 영역 */
-  #reviewsDock{
-    max-width:1024px; margin:10px auto 4px;   /* ← 원하면 위여백 조절 */
-    display:flex; justify-content:center; align-items:center;
-  }
-  /* 도킹된 리뷰 보기 버튼(애니메이션 없음) */
-  #reviewsCue{
-    position:relative;                        /* ← absolute/fixed 아님 */
-    padding:8px 14px; border-radius:999px;
-    background:rgba(0,0,0,.65); color:#fff;
-    font:600 14px var(--ui-font);
-    display:flex; align-items:center; gap:8px;
-    cursor:pointer; pointer-events:auto;
-    backdrop-filter:saturate(1.2) blur(2px);
-    box-shadow:0 4px 10px rgba(0,0,0,.25);
-  }
-  #reviewsCue .chev{font-size:14px; line-height:1;}
-</style>
-
-<script>
-(function(){
   // === 그대로 사용 ===
   const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzETvo4cUpSNUB4LNF_CKWIfOtQ89m34mRE7kvbHD3he1fxlFK7xPjstwVzV-lvSUJA/exec';
 
@@ -751,6 +643,59 @@ pad.addEventListener('keyup',    cancelOnMove, true);
 })();
 </script>
 
+<style>
+  /* Stage 아래 도킹 영역 */
+  #reviewsDock{
+    max-width:1024px; margin:10px auto 4px;   /* ← 원하면 위여백 조절 */
+    display:flex; justify-content:center; align-items:center;
+  }
+  /* 도킹된 리뷰 보기 버튼(애니메이션 없음) */
+  #reviewsCue{
+    position:relative;                        /* ← absolute/fixed 아님 */
+    padding:8px 14px; border-radius:999px;
+    background:rgba(0,0,0,.65); color:#fff;
+    font:600 14px var(--ui-font);
+    display:flex; align-items:center; gap:8px;
+    cursor:pointer; pointer-events:auto;
+    backdrop-filter:saturate(1.2) blur(2px);
+    box-shadow:0 4px 10px rgba(0,0,0,.25);
+  }
+  #reviewsCue .chev{font-size:14px; line-height:1;}
+</style>
+
+<script>
+(function(){
+  const LS_KEY='accentslibres.reviews.v2';
+  const stage   = document.getElementById('stage');
+  const reviews = document.getElementById('reviews');
+  const fitwrap = document.getElementById('fitwrap');
+  if(!stage || !reviews || !fitwrap) return;
+
+  // 기존 cue/fab/dock 제거
+  document.getElementById('reviewsCue')?.remove();
+  document.getElementById('fabReviews')?.remove();
+  document.getElementById('reviewsDock')?.remove();
+
+  // 리뷰 개수
+  let n=0; try{ const a=JSON.parse(localStorage.getItem(LS_KEY)||'[]'); n=Array.isArray(a)?a.length:0; }catch(e){}
+
+  // --- 도킹 컨테이너(무대 아래, fitwrap 바깥) ---
+  const dock = document.createElement('div');
+  dock.id = 'reviewsDock';
+  dock.style.cssText = 'max-width:1024px;margin:-60px auto 34px;display:flex;justify-content:center;';
+
+  const cue = document.createElement('div');
+  cue.id = 'reviewsCue';
+  cue.style.cssText = 'position:relative;padding:8px 14px;border-radius:999px;background:rgba(0,0,0,.65);color:#fff;font:600 14px var(--ui-font);display:flex;align-items:center;gap:8px;cursor:pointer;backdrop-filter:saturate(1.2) blur(2px);box-shadow:0 4px 10px rgba(0,0,0,.25);';
+  cue.innerHTML = `<span class="chev" style="font-size:14px;line-height:1;">▼</span>
+                   <span>Voir les avis${n?` (${n})`:''}</span>`;
+  cue.addEventListener('click',()=>reviews.scrollIntoView({behavior:'smooth', block:'start'}));
+  dock.appendChild(cue);
+
+  // ✅ fitwrap "바깥"으로 삽입(옆이 아니라 아래 줄에 위치)
+  fitwrap.parentNode.insertBefore(dock, fitwrap.nextSibling);
+})();
+</script>
 
 <footer style="
   background:#f2f0e6;
