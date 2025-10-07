@@ -111,6 +111,7 @@ Le point est, lui aussi, plus pratique.
       $stars.appendChild(s);
     }
   }
+  if(!$stars) return;
   $stars.addEventListener('mousemove',e=>{const t=e.target.closest('span');if(t)renderStars(+t.dataset.v);});
   $stars.addEventListener('mouseleave',()=>renderStars(starVal||0));
   $stars.addEventListener('click',e=>{const t=e.target.closest('span');if(!t)return;starVal=+t.dataset.v;renderStars(starVal);});
