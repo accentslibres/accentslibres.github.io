@@ -667,37 +667,90 @@ pad.addEventListener('keyup',    cancelOnMove, true);
 
 <script>
 (function(){
-  const LS_KEY='accentslibres.reviews.v2';
-  const stage   = document.getElementById('stage');
-  const reviews = document.getElementById('reviews');
-  const fitwrap = document.getElementById('fitwrap');
-  if(!stage || !reviews || !fitwrap) return;
+  // === 그대로 사용 ===
+  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzETvo4cUpSNUB4LNF_CKWIfOtQ89m34mRE7kvbHD3he1fxlFK7xPjstwVzV-lvSUJA/exec';
 
-  // 기존 cue/fab/dock 제거
-  document.getElementById('reviewsCue')?.remove();
-  document.getElementById('fabReviews')?.remove();
-  document.getElementById('reviewsDock')?.remove();
+  // 요소들
+  const $form  = document.getElementById('reviewForm');
+  const $name  = document.getElementById('rvName');
+  const $text  = document.getElementById('rvText');
+  const $stars = document.getElementById('rvStars');
+  const $list  = document.getElementById('rvList') || document.getElementById('reviewList');
+  if (!$form || !$stars || !$list) return;  // 해당 섹션 없으면 조용히 종료
 
-  // 리뷰 개수
-  let n=0; try{ const a=JSON.parse(localStorage.getItem(LS_KEY)||'[]'); n=Array.isArray(a)?a.length:0; }catch(e){}
+  // 별점 UI
+  let starVal = 0;
+  function renderStars(v){
+    $stars.innerHTML='';
+    for(let i=1;i<=5;i++){
+      const s=document.createElement('span');
+      s.textContent = i<=v ? '★' : '☆';
+      s.style.color = i<=v ? '#f7b500' : '#ccc';
+      s.style.marginLeft = i===1 ? '0' : '2px';
+      s.dataset.v = i;
+      $stars.appendChild(s);
+    }
+  }
+  $stars.addEventListener('mousemove',e=>{
+    const t=e.target.closest('span'); if(t) renderStars(+t.dataset.v);
+  });
+  $stars.addEventListener('mouseleave',()=>renderStars(starVal||0));
+  $stars.addEventListener('click',e=>{
+    const t=e.target.closest('span'); if(!t) return;
+    starVal = +t.dataset.v; renderStars(starVal);
+  });
+  renderStars(0);
 
-  // --- 도킹 컨테이너(무대 아래, fitwrap 바깥) ---
-  const dock = document.createElement('div');
-  dock.id = 'reviewsDock';
-  dock.style.cssText = 'max-width:1024px;margin:-60px auto 34px;display:flex;justify-content:center;';
+  // 유틸
+  function escapeHtml(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
+  function cardHTML(it){
+    const star='★'.repeat(+it.stars)+'☆'.repeat(5-+it.stars);
+    return `<div style="background:#f3f1e7;border-radius:14px;padding:18px;">
+      <div style="color:#f7b500;font-size:18px;line-height:1">${star}</div>
+      <div style="font-size:18px;margin-top:6px">${escapeHtml(it.text)}</div>
+      <div style="font-size:14px;color:#777;margin-top:8px">— ${escapeHtml(it.name||'Anonyme')}</div>
+    </div>`;
+  }
 
-  const cue = document.createElement('div');
-  cue.id = 'reviewsCue';
-  cue.style.cssText = 'position:relative;padding:8px 14px;border-radius:999px;background:rgba(0,0,0,.65);color:#fff;font:600 14px var(--ui-font);display:flex;align-items:center;gap:8px;cursor:pointer;backdrop-filter:saturate(1.2) blur(2px);box-shadow:0 4px 10px rgba(0,0,0,.25);';
-  cue.innerHTML = `<span class="chev" style="font-size:14px;line-height:1;">▼</span>
-                   <span>Voir les avis${n?` (${n})`:''}</span>`;
-  cue.addEventListener('click',()=>reviews.scrollIntoView({behavior:'smooth', block:'start'}));
-  dock.appendChild(cue);
+  // === JSONP로 불러오기: CORS 우회 ===
+  window.__onReviews = function(arr){
+    try{
+      const ordered = Array.isArray(arr) ? arr.reverse() : [];
+      $list.innerHTML = ordered.map(cardHTML).join('');
+      if (window.setReviewCount) window.setReviewCount(ordered.length);
+    }catch(e){}
+  };
+  function loadReviewsJSONP(){
+    const s = document.createElement('script');
+    s.src = SCRIPT_URL + '?n=20&callback=__onReviews&ts=' + Date.now();
+    document.head.appendChild(s);
+  }
+  document.addEventListener('DOMContentLoaded', loadReviewsJSONP);
 
-  // ✅ fitwrap "바깥"으로 삽입(옆이 아니라 아래 줄에 위치)
-  fitwrap.parentNode.insertBefore(dock, fitwrap.nextSibling);
+  // 제출 → 시트 저장 (no-cors)
+  $form.addEventListener('submit', async (e)=>{
+    e.preventDefault();
+    const name = ($name.value||'').trim() || 'Anonyme';
+    const text = ($text.value||'').trim();
+    if(!starVal){ alert('Choisissez une note.'); return; }
+    if(!text){ alert('Saisissez votre avis.'); return; }
+
+    // 화면에 즉시 추가
+    const item = {name, stars: starVal, text};
+    $list.insertAdjacentHTML('afterbegin', cardHTML(item));
+
+    // 시트 저장 (응답은 못 읽어도 저장은 됨)
+    try{
+      await fetch(SCRIPT_URL, { method:'POST', mode:'no-cors', body: JSON.stringify(item) });
+      // 저장 직후 최신 목록을 다시 받고 싶으면 다음 줄 주석 해제
+      // loadReviewsJSONP();
+    }catch(e){}
+    // reset
+    $name.value=''; $text.value=''; starVal=0; renderStars(0);
+  });
 })();
 </script>
+
 
 <footer style="
   background:#f2f0e6;
