@@ -89,20 +89,68 @@ Le point est, lui aussi, plus pratique.
 
 </div>
 
+
 <script>
 (function(){
-  function ensurePadId(){
-    // Prefer existing #output from Teranama
-    var t = document.getElementById('output') || document.querySelector('textarea');
-    if (t && !t.id) t.id = 'pad';
-    else if (t && t.id !== 'pad') t.id = 'pad';
-    // best-effort input-friendly flags
-    t && (t.autocomplete = 'off', t.autocorrect = 'off', t.autocapitalize = 'off', t.spellcheck = false);
+  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzETvo4cUpSNUB4LNF_CKWIfOtQ89m34mRE7kvbHD3he1fxlFK7xPjstwVzV-lvSUJA/exec';
+  const $form=document.getElementById('reviewForm');
+  const $name=document.getElementById('rvName');
+  const $text=document.getElementById('rvText');
+  const $list=document.getElementById('rvList');
+  const $stars=document.getElementById('rvStars');
+  let starVal=0;
+
+  function renderStars(v){
+    $stars.innerHTML='';
+    for(let i=1;i<=5;i++){
+      const s=document.createElement('span');
+      s.textContent=i<=v?'★':'☆';
+      s.style.color='#f7b500';
+      s.style.marginLeft=i===1?'0':'2px';
+      s.dataset.v=i;
+      $stars.appendChild(s);
+    }
   }
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', ensurePadId);
-  else ensurePadId();
+  $stars.addEventListener('mousemove',e=>{const t=e.target.closest('span');if(t)renderStars(+t.dataset.v);});
+  $stars.addEventListener('mouseleave',()=>renderStars(starVal||0));
+  $stars.addEventListener('click',e=>{const t=e.target.closest('span');if(!t)return;starVal=+t.dataset.v;renderStars(starVal);});
+  renderStars(0);
+
+  function escapeHtml(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
+  function cardHTML(it){
+    const star='★'.repeat(+it.stars)+'☆'.repeat(5-+it.stars);
+    return `<div style="background:#f3f1e7;border-radius:14px;padding:18px;">
+      <div style="color:#f7b500;font-size:18px;line-height:1">${star}</div>
+      <div style="font-size:18px;margin-top:6px">${escapeHtml(it.text)}</div>
+      <div style="font-size:14px;color:#777;margin-top:8px">— ${escapeHtml(it.name||'Anonyme')}</div>
+    </div>`;
+  }
+
+  async function loadReviews(){
+    try{
+      const r=await fetch(SCRIPT_URL+'?n=20');
+      const arr=await r.json();
+      $list.innerHTML=arr.reverse().map(cardHTML).join('');
+      if(window.setReviewCount)window.setReviewCount(arr.length);
+    }catch(e){ $list.innerHTML=''; if(window.setReviewCount)window.setReviewCount(0); }
+  }
+
+  $form.addEventListener('submit',async e=>{
+    e.preventDefault();
+    const name=$name.value.trim();
+    const text=$text.value.trim();
+    if(!starVal){alert('Choisissez une note.');return;}
+    if(!text){alert('Saisissez votre avis.');return;}
+    const newItem={name,stars:starVal,text};
+    $list.insertAdjacentHTML('afterbegin',cardHTML(newItem));
+    try{ await fetch(SCRIPT_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(newItem)}); }catch(e){}
+    $name.value='';$text.value='';starVal=0;renderStars(0);
+  });
+
+  document.addEventListener('DOMContentLoaded',loadReviews);
 })();
 </script>
+
 <script>(function(){ 
   var t = document.getElementById('output') || document.querySelector('textarea');
   if (t){ 
