@@ -128,7 +128,7 @@ Le point est, lui aussi, plus pratique.
 
   async function loadReviews(){
     try{
-      const r=await fetch(SCRIPT_URL+'?n=20');
+      const r=await fetch(SCRIPT_URL+'?n=20&ts='+Date.now());
       const arr=await r.json();
       $list.innerHTML=arr.reverse().map(cardHTML).join('');
       if(window.setReviewCount)window.setReviewCount(arr.length);
