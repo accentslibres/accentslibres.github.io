@@ -56,6 +56,18 @@
   /* preview NEXT marker (kept but neutralized) */
   #preview-NEXT.default::after{content:none !important; border:none !important; width:0 !important; height:0 !important;}
   #preview-NEXT{font-size:22px; text-shadow:.5px 0 currentColor,-.5px 0 currentColor,0 .5px currentColor,0 -.5px currentColor;}
+  
+  /* 메모 딱지 */
+#note {
+  position:absolute;          /* overlay와 동일 */
+  top:35px;                  /* 위치만 조절 */
+  right:0px;                 /* 필요에 따라 변경 */
+  width:180px;                /* 이미지 폭 */
+  z-index:50;                 /* textarea 위 */
+  pointer-events:none;        /* 타이핑 방해 X */
+}
+#pad{ z-index:10; }           /* (안 되면 추가) */
+
 </style>
 
 </head>
@@ -83,7 +95,8 @@ Le point est, lui aussi, plus pratique.
   <div id="previewLabels" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999;"></div>
 
 
-  <textarea id="output" class="overlay" style="top:240px; left:14.5%; height:130px; width:70%; font-size: 24px;"></textarea>
+  <textarea id="output" class="overlay" style="top:240px; left:19%; height:130px; width:60%; font-size: 24px;"></textarea>
+
   <div class="overlay" style="bottom:160px; left:50%; transform:translateX(-50%); display:flex; gap:20px;">
     
 
