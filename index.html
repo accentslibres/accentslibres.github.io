@@ -54,70 +54,14 @@
   .dot{width:7px;height:7px;border-radius:50%;background:#ddd}
   .dot.on{background:#111}
   .tryBig{display:inline-block;background:var(--btn);color:#fff;border:none;border-radius:999px;padding:16px 34px;font-size:22px;font-weight:800;box-shadow:0 10px 36px rgba(255,59,48,.28);cursor:pointer;position:absolute;right:36px;bottom:36px}
-  /* DEMO minimal */
-  #demo{display:none;background:#000;color:#fff;padding:28px 18px 64px}
-  .demoWrap{max-width:1120px;margin:0 auto;position:relative}
-  .demoTop{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
-  .brand{font-size:36px;font-weight:900;letter-spacing:0.2px}
-  .brand small{font-size:22px;font-weight:400;color:#d0d0d0;margin-left:10px}
-  .topKeys{display:flex;gap:14px}
-  .topKeys img{width:64px;height:64px;object-fit:contain;filter:drop-shadow(0 3px 4px rgba(0,0,0,.35))}
-  .topKeys {
-  transform: translateX(-180px); /* 왼쪽으로 이동 */
-}
-  .surface{display:grid;grid-template-columns:1.25fr 220px;gap:24px;align-items:start}
-  .padWrap{background:#1a2230;border:none;min-height:520px;padding:0;border-radius:6px}
-  #pad{width:100%;min-height:520px;border:none;background:#1a2230;color:#fff;outline:none;padding:22px;margin:0;resize:none;font:28px/1.6 ui-monospace,Menlo,Consolas,monospace;border-radius:6px}
-  .note img{width:100%;height:auto;display:block;max-width:220px}
-/* 래퍼: 노트와 버튼의 기준 폭 */
-.noteWrap{
-  position:relative;
-  width:340px;              /* 필요하면 조정 */
-  display:inline-block;
-}
-
-/* 노트 */
-.note{position:relative;max-width:220px;margin-top: -30px;}
-.note>img{ width:100%; display:block; }
-
-/* 노트 내부 텍스트 박스 */
-.noteText{
-  position:absolute;
-  left:28px;
-  right:28px;
-  bottom:36px;
-  display:flex;
-  flex-direction:column;
-  z-index:2;
-  color:#111;
-}
-.noteText h4{
-  margin:0 0 12px 0;
-  font-size:22px;
-  font-weight:800;
-}
-.noteText p{
-  margin:0;
-  line-height:1.5;
-  font-weight:600;
-  overflow-wrap:break-word; /* 줄바꿈 강제 */
-  word-break:keep-all;      /* 단어 단위 유지 */
-  hyphens:auto;             /* 하이픈 분할 허용(지원 브라우저) */
-}
-
-/* 밖으로 뺀 빨간 버튼: 노트 왼쪽 정렬 */
-.beta-btn-out{
-  display:inline-block;
-  background:#ff2b2b;
-  color:#fff;
-  font-weight:800;
-  border-radius:14px;
-  text-decoration:none;
-  transition:background .2s;
-}
-.beta-btn-out:hover{ background:#ff4646; }
-
-
+  
+  .mobileNotice{
+  display:none;
+  position:sticky; top:0; z-index:5;
+  background:#111; color:#ffd54f;
+  padding:10px 14px; text-align:center;
+  font:600 14px/1.4 var(--ui-font);
+  border-bottom:1px solid rgba(255,213,79,.25);
 
 @media (max-width: 768px) {
   .hero .enter {
@@ -187,6 +131,7 @@
   #reviews form {
     grid-template-columns: 1fr;
   }
+  .mobileNotice{ display:block; }
 }
 
 </style>
@@ -202,6 +147,8 @@
 </div>
   <button class="enter" id="heroBtn">En savoir plus</button>
 </section>
+<div class="mobileNotice">⚠️ Veuillez utiliser un ordinateur pour la démonstration.</div>
+
 
 <!-- Tutorial (all 6 slides, Try only on last) -->
 <div class="modal" id="modal">
@@ -357,7 +304,12 @@ const dots=document.getElementById('dots');
 const tryBig=document.getElementById('tryBig');
 const demo=document.getElementById('demo');
 
-function openModal(){document.body.style.overflow='hidden';modal.classList.add('on');show(0);}
+function openModal(){
+  const isMobile = window.matchMedia('(pointer: coarse)').matches || /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
+  if (!isMobile) document.body.style.overflow = 'hidden';  // 데스크톱만 잠금
+  modal.classList.add('on');
+  show(0);
+}
 function closeModal(){modal.classList.remove('on');document.body.style.overflow='';}
 function openDemo(){closeModal();demo.style.display='block';window.scrollTo({top:demo.offsetTop,behavior:'smooth'}); localStorage.setItem('uq_seen_tutorial', '1'); }
 
@@ -400,25 +352,23 @@ closeBtn.addEventListener('click',closeModal);
   const SEEN_KEY = 'uq_seen_tutorial';
   const seen = localStorage.getItem(SEEN_KEY) === '1';
   const btn = document.getElementById('heroBtn');
+  const isMobile = window.matchMedia('(pointer: coarse)').matches || /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
 
   window.UQ_IS_SEEN = seen;
 
-  // 버튼 라벨 고정
   btn.textContent = 'En savoir plus';
 
   if (seen) {
-    // 재방문: 페이지 로드 즉시 데모를 열어 둬서 스크롤 가능하게
     demo.style.display = 'block';
-    document.body.style.overflow = '';   // 혹시 잠겨있으면 해제
-    btn.onclick = () => {
-      window.scrollTo({ top: demo.offsetTop, behavior: 'smooth' });
-    };
+    document.body.style.overflow = '';   // 항상 스크롤 허용
+    btn.onclick = () => window.scrollTo({ top: demo.offsetTop, behavior: 'smooth' });
   } else {
-  // 첫 방문자: 스크롤 막기
-  document.body.style.overflow = 'hidden';
-  btn.onclick = openModal;
+    // 첫 방문자: 데스크톱만 스크롤 잠금, 모바일은 스크롤 허용
+    document.body.style.overflow = isMobile ? '' : 'hidden';
+    btn.onclick = openModal;
   }
 })();
+
 
 
 </script>
