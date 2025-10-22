@@ -1,39 +1,223 @@
-<!doctype html>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Accents Libres</title>
+<!DOCTYPE html>
+<html lang="ko">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>SuperQwerty Demo</title>
+<style>
+  :root{--W:min(1100px,96vw);--H:calc(var(--W)*9/16);--mint:#9fe0ff;}
+  html,body{height:100%;margin:0;background:#000;font-family:system-ui,"Noto Sans KR",sans-serif;color:#fff;overflow:hidden;}
+  .stage{position:relative;width:var(--W);height:var(--H);margin:2vh auto;overflow:hidden;border-radius:16px;background:#000;}
+
+  /* 상단 타이틀 영역 */
+  .title{position:absolute;width:100%;text-align:center;opacity:1;will-change:transform,opacity;}
+  .az{top:18%;font-size:clamp(56px,9.5vw,100px);letter-spacing:.02em;}
+  .qw{top:42%;font-size:clamp(56px,9.5vw,100px);letter-spacing:.02em;}
+  .tCaret{display:inline-block;width:.06em;height:1em;background:#9fe0ff;margin-left:.14em;vertical-align:-.1em;animation:blink 1s steps(1,end) infinite;opacity:.85;}
+  @keyframes blink{50%{opacity:0}}
+
+  /* NO! 스윕 */
+  .no{position:absolute;right:-120%;top:29%;font-size:clamp(120px,18vw,190px);font-weight:900;color:#ff4d4d;
+      filter:drop-shadow(0 10px 26px rgba(255,0,0,.35));
+      text-shadow: 0 0 10px rgba(255,90,90,.35), 0 0 24px rgba(255,90,90,.25);
+      transition:right .9s cubic-bezier(.2,.8,.2,1);}
+  .knock{transform:translateX(-160%) rotate(-4deg);opacity:0;transition:transform .55s ease, opacity .55s ease;}
+
+  /* SuperQwerty 강조 후 스핀 아웃 */
+  .super{position:absolute;width:100%;text-align:center;top:30%;font-size:clamp(110px,16vw,160px);font-weight:900;color:var(--mint);opacity:0;}
+  @keyframes flashTwice{0%,49%,100%{opacity:1} 25%,75%{opacity:.25}}
+  @keyframes spinExit{0%{transform:translateX(0) rotate(0deg);opacity:1}
+                      80%{transform:translateX(0) rotate(360deg);opacity:1}
+                      100%{transform:translateY(-120%) rotate(400deg);opacity:0}}
+
+/* 본 데모 영역 */
+.screen{
+  position:absolute;
+  left:0; top:10%;
+  width:100%;
+  height:35%;
+  display:flex;
+  align-items:flex-end;
+  justify-content:center;
+  padding:3% 4%;
+  font-size:clamp(36px,8vw,80px);
+  letter-spacing:.02em;
+  box-sizing:border-box;
+  white-space:pre;
+  z-index:2;
+}
+
+.kbdWrap{
+  position:absolute;
+  left:50%;
+  bottom:0;
+  transform:translateX(-50%);
+  width:100%;
+  height:55%;
+  display:flex;
+  align-items:flex-end;
+  justify-content:center;
+}
+
+.kbd{
+  width:90%;
+  max-width:1000px;
+  height:auto;
+}
+
+.keyDown{
+  position:absolute;
+  width:6%;
+  opacity:0;
+  transition:opacity .05s;
+}
+
+.finger{
+  position:absolute;
+  width:22vw;
+  max-width:200px;
+  display:none;
+  filter:drop-shadow(0 8px 18px rgba(0,0,0,.45));
+  transform-origin:50% 85%;
+  z-index:3;
+}
+
+.caption{
+  position:absolute;
+  width:100%;
+  top:42%;
+  text-align:center;
+  font-size:clamp(28px,6vw,80px);
+  opacity:0;
+  transition:opacity .35s;
+ 
+   .caption.end {
+  top: 20%;   /* 엔딩만 위쪽으로 */
+  
+  .caption .mint {
+    color: var(--mint); !important;
+  }
+}
+
+/* 모바일 전용 추가 보정 */
+@media (max-width:768px){
+  .stage{--W:100vw;--H:calc(var(--W)*9/16);}
+  .screen{top:8%;font-size:clamp(24px,6vw,48px);}
+  .kbd{width:100%;}
+  .finger{width:25vw;}
+}
+
+
+}
+</style>
+<body>
+  <div class="stage" id="stage">
+    <!-- 빈 화면에서 시작 -->
+    <div class="title az" id="az"><span id="azText"></span><span class="tCaret" id="azCaret"></span></div>
+    <div class="title qw" id="qw"><span id="qwText"></span><span class="tCaret" id="qwCaret"></span></div>
+    <div class="no" id="no">NO!</div>
+    <div class="super" id="super">SuperQwerty</div>
+
+    <div class="screen"><span id="typed"></span><span class="caret" id="caret"></span></div>
+    <div class="kbdWrap" id="kbdWrap">
+      <img class="kbd" id="kbd" src="img/keyboard.png" alt="">
+      <img class="keyDown" id="commaDown" src="img/comma_down.png" alt="">
+      <img class="keyDown" id="eDown" src="img/e_down.png" alt="">
+    </div>
+    <img class="finger" id="finger" src="img/finger.png" alt="">
+    <div class="caption" id="caption"></div>
+  </div>
+
 <script>
-(async () => {
-  // 1) 수동 강제: ?layout=azerty | ?layout=qwerty | #azerty | #qwerty
-  const url = new URL(location.href);
-  const force = url.searchParams.get('layout') || (location.hash||'').slice(1);
-  if (force === 'azerty' || force === 'qwerty') {
-    localStorage.setItem('al_layout', force);
-    location.replace(force + '.html'); return;
-  }
+const $=s=>document.querySelector(s);
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
 
-  // 2) 레이아웃 맵으로 감지 (HTTPS/localhost에서만)
-  let guess = null;
-  try {
-    if (navigator.keyboard?.getLayoutMap) {
-      const m = await navigator.keyboard.getLayoutMap();
-      const Q = (m.get('KeyQ')||'').toLowerCase();
-      const A = (m.get('KeyA')||'').toLowerCase();
-      const D1= (m.get('Digit1')||'');      // AZERTY면 보통 '&'
-      const isAzerty = (Q==='a' && A==='q') || (D1 && D1 !== '1');
-      guess = isAzerty ? 'azerty' : 'qwerty';
-    }
-  } catch {}
+/* 위치 보정 (기존 그대로) */
+const POS={comma:{x:64.5,y:89},e:{x:34,y:70},semicolon:{x:72,y:79},dot:{x:69.5,y:89},question:{x:74.5,y:89},q:{x:23.5,y:70},n:{x:54,y:89},c:{x:38,y:89},space:{x:50,y:99},o:{x:66,y:70},k:{x:61,y:79}};
+const CAL={comma:{dx:620,dy:-13,scale:.93},e:{dx:10,dy:-227,scale:.93},semicolon:{dx:630,dy:0,scale:.93},dot:{dx:730,dy:-10,scale:.93},question:{dx:820,dy:-15,scale:.93},q:{dx:-290,dy:-140,scale:.93},n:{dx:500,dy:-65,scale:.93},c:{dx:440,dy:-5,scale:.93},space:{dx:540,dy:60,scale:.93}};
 
-  // 3) 폴백: 언어
-  if (!guess) {
-    const lang = (navigator.language||'').toLowerCase();
-    guess = lang.startsWith('fr') ? 'azerty' : 'qwerty';
-  }
+/* 유틸 */
+async function showFingerAt({x,y},hold=180){const f=$('#finger');f.style.left=`calc(${x}% - 6%)`;f.style.top=`calc(${y}% - 22%)`;f.style.display='block';f.style.transform='scale(1)';await sleep(20);f.style.transform='scale(.97)';await sleep(hold);f.style.display='none';}
+async function pressKey(which,hold=380){if(['comma','e'].includes(which)){const d=which==='comma'?$('#commaDown'):$('#eDown');const c=CAL[which];d.style.transform=`translate(${c.dx}%,${c.dy}%) scale(${c.scale})`;d.style.opacity='1';await showFingerAt(POS[which],hold);d.style.opacity='0';}else await showFingerAt(POS[which],hold);}
+async function typeSeq(el,text,per=85){el.textContent='';for(const ch of text){el.textContent+=ch;await sleep(per);}}
+async function typeSeqFast(el,text,per=55){el.textContent='';for(const ch of text){el.textContent+=ch;await sleep(per);}}
+async function flashCaption(t,hold=800,fade=300){const c=$('#caption');c.textContent=t;c.style.opacity=1;await sleep(hold);c.style.opacity=0;await sleep(fade);}
+async function clearAll(){const caret=$('#caret');$('#typed').textContent='';$('#caption').textContent='';$('#caption').style.opacity=0;const wrap=$('#kbdWrap');wrap.animate([{opacity:1},{opacity:0}],{duration:900,fill:'forwards'});caret.style.opacity=0;caret.style.animation='none';caret.style.display='none';await sleep(950);}
 
-  // 4) 캐시 갱신 후 이동
-  localStorage.setItem('al_layout', guess);
-  location.replace(guess + '.html');
-})();
+/* 데모 타이핑 */
+async function runDemo(){const typed=$('#typed');await pressKey('comma');typed.textContent+=',';await sleep(760);await pressKey('e');typed.textContent=typed.textContent.slice(0,-1)+'é';await sleep(700);await pressKey('semicolon');typed.textContent+=';';await sleep(560);await pressKey('e');typed.textContent=typed.textContent.slice(0,-1)+'ê';await sleep(720);await pressKey('dot');typed.textContent+='.';await sleep(300);await pressKey('dot');typed.textContent+='.';await sleep(300);await pressKey('e');typed.textContent=typed.textContent.slice(0,-2)+'ë';await sleep(720);await pressKey('question');typed.textContent+='?';await sleep(360);await pressKey('e');typed.textContent=typed.textContent.slice(0,-1)+'è';await sleep(720);await pressKey('question');typed.textContent+='?';await sleep(360);await pressKey('n');typed.textContent=typed.textContent.slice(0,-1)+'ñ';await sleep(720);await pressKey('semicolon');typed.textContent+=';';await sleep(420);await pressKey('c');typed.textContent=typed.textContent.slice(0,-1)+'ç';await sleep(760);await pressKey('q');typed.textContent+='q';await sleep(420);await pressKey('o');typed.textContent=typed.textContent.slice(0,-1)+'œ';await sleep(760);await pressKey('dot',200);typed.textContent+='.';await sleep(220);await pressKey('dot',200);typed.textContent+='.';await sleep(220);await pressKey('dot',200);typed.textContent+='.';await sleep(260);await pressKey('space',200);typed.textContent+=' ';await sleep(200);await pressKey('o',200);typed.textContent+='o';await sleep(200);await pressKey('k',200);typed.textContent+='k';await sleep(200);await pressKey('question',200);typed.textContent+='?';await sleep(460);}
+
+async function main(){
+  const caret = $('#caret');
+  const wrap  = $('#kbdWrap');
+  const kbd   = $('#kbd');
+
+  // 기존 인트로( AZERTY/QWERTY/NO!/Super )는 쓰지 않음 → 전부 감춤
+  $('#az').style.display = 'none';
+  $('#qw').style.display = 'none';
+  $('#no').style.display = 'none';
+  $('#super').style.display = 'none';
+
+  // 1) 자막: "쿼티는 악센트가 문제라고요?" (2초)
+  await sleep(300);
+  const cap = $('#caption');
+  cap.style.opacity = 1;
+  await typeSeq(cap, 'Le QWERTY a des problèmes d’accents ?', 26);
+  await sleep(2000);
+  cap.style.opacity = 0; await sleep(300);
+
+
+  // 2) 자막: "이제 슈퍼쿼티가 왔습니다." (3초)
+  cap.style.opacity = 1;
+  await typeSeq(cap, 'SuperQwerty est enfin là !', 26);
+  await sleep(3000);
+  cap.style.opacity = 0; await sleep(300);
+
+
+  // 3) 노노노노 시리즈 (각 1.5초씩)
+  await flashCaption('Pas de Dead key !', 1500, 240);
+  await flashCaption('Pas de Majuscule !', 1500, 240);
+  await flashCaption('Pas d’AltGr !', 1500, 240);
+  await flashCaption('Pas de pression longue !', 1500, 240);
+
+  // 4) 데모 전에 자판 훑어보기
+  //    keyboard.png 1초 → keyboard2.png 3초 → 다시 keyboard.png
+  wrap.animate([{left:'110%'},{left:'0%'}], {duration:900, easing:'cubic-bezier(.2,.9,.2,1)', fill:'forwards'});
+  await sleep(1000);                 // 슬라이드 인 완료 대기
+  kbd.src = 'img/keyboard.png';      // (기본값이지만 확실히 지정)
+  await sleep(1000);                 // keyboard.png 1초
+  kbd.src = 'img/keyboard2.png';     // 새 이미지 (img/keyboard2.png 에 배치)
+  await sleep(3000);                 // 3초
+  kbd.src = 'img/keyboard.png';      // 원래 이미지로 복귀
+
+  // 5) 커서 표시 → 1초 대기 → 데모 시작
+  caret.style.display = 'inline-block';
+  caret.style.animation = 'blink 1s steps(1) infinite';
+  caret.style.opacity = 1;
+  await sleep(1000);
+  await runDemo();
+
+  // 6) 마무리 자막 (기존 엔딩 그대로)
+  await sleep(2200);
+  await clearAll();
+  const end = $('#caption');
+  end.classList.add('end'); 
+  end.innerHTML = 'La révolution des accents. Essayez SuperQwerty dès maintenant sur <span class="mint">SuperQwerty.com</span>';
+  end.style.opacity = 1;
+  
+  // 3초 유지 후 1.5초 동안 서서히 페이드 아웃
+  await sleep(5000);
+  end.style.transition = 'opacity 1.5s ease';
+  end.style.opacity = 0;
+
+  // 첫 엔딩 문구 페이드아웃 이후
+  await sleep(1800); // 페이드 완전히 끝난 뒤 약간의 여유
+  end.innerHTML = '<span style="color:var(--mint);font-weight:700;">Visitez&nbsp;SuperQwerty.com</span>';
+  end.style.top = '50%';
+  end.style.transform = 'translateY(-50%)';
+  end.style.opacity = 1;
+}
+
+window.addEventListener('load',main);
 </script>
-<body>Redirection…</body>
+</body>
+</html>
