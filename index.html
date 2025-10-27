@@ -446,6 +446,10 @@ Si la transformation n’est pas souhaitée, appuyez simplement une fois sur Ret
   padding:12px; box-shadow:0 8px 26px rgba(0,0,0,.20);
   overflow:hidden; box-sizing:border-box; width:320px;">
 				<div id="emojiGrid" style="display:grid; grid-template-columns:repeat(8, 28px); gap:8px; font-size:22px; line-height:1; cursor:pointer;"></div>
+				<p style="margin:6px 0 0;text-align:center;font-size:18px;color:#777;">
+  (space : close)
+</p>
+
 			</div>
 
 			<!-- demo 하단 레이아웃 이미지 -->
@@ -699,7 +703,6 @@ let bypassOnce    = null;   // { trigger: string, target: string, posAfterTrigge
 const emojiPanel = document.getElementById('emojiPanel');
 const emojiGrid  = document.getElementById('emojiGrid');
 const EMOJIS = Array.from('😀😁😂🤣😃😄😅😉😊😍😘😜🤔🤗🤩🥳😎😭😡🧡💔💢💦👍🙏✨🔥💯✅❌🌟🎉🎁📌🍔☕🚗✈🏡🏬※©®™👈👉👆👇');
-
 function ensureEmojiGrid() {
   if (!emojiGrid || emojiGrid.childElementCount) return;
   EMOJIS.forEach(e => {
@@ -711,11 +714,17 @@ function ensureEmojiGrid() {
 
     b.style.cssText = 'border:0;background:none;width:38px;height:38px;font-size:28px;line-height:1;cursor:pointer;';
 
-    b.addEventListener('click', () => {
-      insertAtCaret(e);
-      closeEmojiPanel();
-      pad.focus();
-    });
+b.addEventListener('click', () => {
+  const picked = e;
+    const { from, to } = lastDefaultEmoji;
+    pad.setSelectionRange(from, to);
+    pad.setRangeText(picked, from, to, 'end');
+    lastDefaultEmoji = null;
+  
+  closeEmojiPanel();
+  pad.focus();
+});
+
     emojiGrid.appendChild(b);
   });
 }
@@ -737,7 +746,7 @@ function openEmojiPanel(){
   // 대충 pad 왼쪽 하단 기준으로 고정 (정확 커서 추적은 복잡하니 간단히)
 	emojiPanel.style.display = 'block';
 	emojiPanel.style.left = '12px';                  // ← 중앙정렬용 '' 아니고 12px
-	emojiPanel.style.top  = (rectPad.height - 12) + 'px';
+	emojiPanel.style.top  = (rectPad.height - 48) + 'px';
 
   // 밖 클릭/ESC로 닫기
   window.addEventListener('mousedown', onOutsideClose, { capture:true });
@@ -745,6 +754,7 @@ function openEmojiPanel(){
 }
 
 function closeEmojiPanel(){
+	lastDefaultEmoji = null; // 닫을 때도 리셋(스페이스로 닫고 나중에 클릭해도 과거걸 안 지움)
   if (!emojiPanel) return;
   emojiPanel.style.display = 'none';
   window.removeEventListener('mousedown', onOutsideClose, { capture:true });
@@ -812,8 +822,8 @@ function onEscClose(e){
   '=': '+',
   'â': '@',
   'ê': '€',
-  '^': '→',
-  '¨': '←'
+  '^': '→ ',
+  '¨': '← '
 };
   if (remap[ev.key]) {
     ev.preventDefault();
@@ -839,10 +849,32 @@ if (ev.key === '²') {
     pad.selectionStart = pad.selectionEnd = s + 1;
   } else {
     // 단일 ² → 데모용 이모지 패널 열기/토글
+	insertAtCaret('🙂');
+	// 기본 🙂 삽입 직후 위치 기억
+{
+  const caret = pad.selectionStart ?? pad.value.length;
+  const len = '🙂'.length;           // JS에서는 2 (서로게이트 페어)
+  lastDefaultEmoji = { from: caret - len, to: caret };
+}
+
     openEmojiPanel();
   }
   return;
 }
+
+if (ev.key === ' ' && lastDefaultEmoji) {
+  if (emojiPanel.style.display === 'block') {
+    // 패널이 열려 있을 때는 닫기만 (공란 입력 방지)
+    ev.preventDefault();
+    closeEmojiPanel();
+  } else {
+    // 패널이 닫힌 상태에서는 그냥 스페이스 정상 입력
+    closeEmojiPanel();
+  }
+  return;
+}
+
+// 평소에는 스페이스 정상 입력
 
 
 	if (ev.key === 'Enter') return; // 기본 엔터 입력 허용
