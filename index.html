@@ -651,20 +651,6 @@ const mapTilde = {
   'n':'ñ','N':'Ñ'
 };
 
-const mapDev = {
-  'r': '\\',
-  't': '~',
-  'p': '|',
-  's': '[',
-  'd': ']',
-  'g': '`',
-  'h': '#',
-  'c': '^',
-  'b': '{',
-  'n': '}'
-};
-
-
   // ---- caret utils
   const sel = el => ({start: el.selectionStart, end: el.selectionEnd, val: el.value});
   const setCaret = (el, p) => { el.selectionStart = el.selectionEnd = p; };
@@ -1079,7 +1065,7 @@ pad.addEventListener('input', () => {
   const tail = v[s - 1];
 
   // ^ 다음 한 글자만 개발자 맵
-  const mapDev = { r:'\\', t:'~', p:'|', s:'[', d:']', g:'`', h:'#', c:'^', b:'{', n:'}' };
+  const mapDev = { r:'\\', t:'~', p:'|', s:'[', d:']', g:'`', h:'#', c:'^', b:'{', n:'}', l:'<', m:'>' };
   const out = (head === '^') ? mapDev[tail] : null;
   if (!out) return;
 
@@ -1496,19 +1482,6 @@ pad.addEventListener('input', () => {
     el.value = vv.slice(0, from) + text + vv.slice(to);
     el.selectionStart = el.selectionEnd = from + text.length;
   }
-
-  const devMap = {
-    '^r': '\\',
-    '^t': '~',
-    '^p': '|',
-    '^s': '[',
-    '^d': ']',
-    '^g': '`',
-    '^h': '#',
-    '^c': '^',
-    '^b': '{',
-    '^n': '}'
-  };
 
   if (devMap[tail2]) {
   if (tail1 === 'â') replaceRange(pad, s - 1, s, '@');
