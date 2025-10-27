@@ -367,12 +367,12 @@ Si la transformation n’est pas souhaitée, appuyez simplement une fois sur Ret
       <div class="frame">
         <img class="keyIcon" src="img/dev.png" alt="q ligature key">
         <h3 class="hd">Caractères spéciaux mémorisables</h3>
-        <p class="sub">Appuyez sur la touche {..}, puis sur la touche du symbole souhaité.<br><small></small>
+        <p class="sub">Appuyez sur la touche fléchée, puis sur la touche du symbole souhaité.<br><small></small>
 		Disposition selon l’initiale de chaque alias – facile à mémoriser</p>
         <div class="rule">
           <svg class="check" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="#10b981" d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg>
           <div class="ruleText">
-            Un double appui sur la touche {..} affichera la carte des touches.<br>
+            Un double appui sur la touche fléchée affichera la carte des touches.<br>
 			Désormais, tapez les symboles spéciaux sans Alt Gr.
           </div>
         </div>
@@ -434,7 +434,7 @@ Si la transformation n’est pas souhaitée, appuyez simplement une fois sur Ret
 <section id="demo">
   <div class="demoWrap">
     <div class="demoTop">
-      <div class="brand">SuperAzerty<small> Accents, chiffres, symboles et même emojis</small></div>
+      <div class="brand">SuperAzerty<small> Votre AZERTY est désormais SuperAZERTY.</small></div>
     </div>
 
     <div class="surface">
@@ -449,7 +449,11 @@ Si la transformation n’est pas souhaitée, appuyez simplement une fois sur Ret
 			</div>
 
 			<!-- demo 하단 레이아웃 이미지 -->
-		<div class="layoutBar" style="margin:18px 0 0; text-align:center;">
+		<div class="layoutBar" style="margin:-30px 0 0; text-align:center;">
+			<p style="text-align:center; color:#ccc; font-size:16px; margin:0 0 6px;">
+👉 Les touches fléchées ne sont pas des touches mortes sur le produit réel.
+</p>
+
 			<img src="img/layout.png" alt="layout" style="max-width:80%; height:auto; display:inline-block;">
 		</div>
       </div>
@@ -708,7 +712,7 @@ let bypassOnce    = null;   // { trigger: string, target: string, posAfterTrigge
 // === Emoji panel (demo only) ===
 const emojiPanel = document.getElementById('emojiPanel');
 const emojiGrid  = document.getElementById('emojiGrid');
-const EMOJIS = Array.from('😀😁😂🤣😃😄😅😉😊😍😘😜🤔🤗🤩🥳😎😭😡🧡💔💢💦👍🙏✨🔥💯✅❌🌟🎉🎁📌🍔☕🚗✈🏡🏬←→↑↓👈👉👆👇');
+const EMOJIS = Array.from('😀😁😂🤣😃😄😅😉😊😍😘😜🤔🤗🤩🥳😎😭😡🧡💔💢💦👍🙏✨🔥💯✅❌🌟🎉🎁📌🍔☕🚗✈🏡🏬※©®™👈👉👆👇');
 
 function ensureEmojiGrid() {
   if (!emojiGrid || emojiGrid.childElementCount) return;
@@ -822,6 +826,8 @@ function onEscClose(e){
   '=': '+',
   'â': '@',
   'ê': '€',
+  '^': '→',
+  '¨': '←'
 };
   if (remap[ev.key]) {
     ev.preventDefault();
