@@ -310,19 +310,12 @@ closeBtn.addEventListener('click',closeModal);
 (function(){
   const btn = document.getElementById('heroBtn');
   const demo = document.getElementById('demo');
-  const SEEN = localStorage.getItem('uq_seen_tutorial') === '1';
   if (!btn || !demo) return;
-  if (SEEN){
-    demo.style.display = 'block';
-    document.body.style.overflow = '';
-    btn.textContent = 'Essayer maintenant';
-    btn.onclick = () => {
-      window.scrollTo({ top: demo.offsetTop, behavior: 'smooth' });
-    };
-  } else {
-    btn.onclick = openModal;
-  }
+  demo.style.display = 'block';
+  document.body.style.overflow = '';
+  btn.onclick = openModal;
 })();
+
 </script>
 </body>
 </html>
