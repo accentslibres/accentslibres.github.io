@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>SuperAzerty</title>
+<title>Papillon 1</title>
 <style>
   :root{--btn:#ff3b30; --ink:#111; --mut:#444; --line:#e9eaee}
   *{box-sizing:border-box}
@@ -13,19 +13,19 @@
   .hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
   .hero .enter{position:absolute;right:5vw;bottom:8vh;background:var(--btn);color:#fff;font-weight:700;border:none;border-radius:999px;padding:16px 28px;font-size:22px;cursor:pointer}
     .hero-copy {
-    position: absolute; right: 7vw; top: 35vh;
+    position: absolute; right: 7vw; top: 45vh;
     color: #fff; text-align: left; z-index: 2;
     pointer-events: none; /* 아래 버튼 클릭 막지 않게 */
     text-shadow: 0 2px 10px rgba(0,0,0,.35);
   }
   .hero-copy h1 {
     margin: 0; line-height: 1;
-    font-size: clamp(36px, 8vw, 100px);
+    font-size: clamp(36px, 8vw, 90px);
   }
   .hero-copy p {
     margin: 30px 0 0; line-height: 1.25;
-    font-size: clamp(18px, 4vw, 38px);
-	text-align: center;
+    font-size: clamp(18px, 4vw, 60px);
+	text-align: right;
   }
   /* MODAL */
   .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.65);backdrop-filter:blur(3px);z-index:50}
@@ -64,15 +64,10 @@
   .demoTop{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
   .brand{font-size:36px;font-weight:900;letter-spacing:0.2px}
   .brand small{font-size:22px;font-weight:400;color:#d0d0d0;margin-left:10px}
-  .topKeys{display:flex;gap:14px}
-  .topKeys img{width:64px;height:64px;object-fit:contain;filter:drop-shadow(0 3px 4px rgba(0,0,0,.35))}
-  .topKeys {
-  transform: translateX(-180px); /* 왼쪽으로 이동 */
-}
   .surface{display:grid;grid-template-columns:1.25fr 220px;gap:24px;align-items:start}
   .padWrap{background:#1a2230;border:none;min-height:300px;padding:0;border-radius:6px;position:relative;}
   #pad{width:100%;min-height:300px;border:none;background:#1a2230;color:#fff;outline:none;padding:22px;margin:0;resize:none;font:28px/1.6 ui-monospace,Menlo,Consolas,monospace;border-radius:6px}
-  .note img{width:100%;height:auto;display:block;max-width:220px}
+
 #emojiPanel{
   position:absolute; z-index:10;
   background:#fff; color:#000;
@@ -96,55 +91,6 @@
   border:0; background:none; width:25px; height:25px;
   font-size:22px; line-height:1; cursor:pointer;
 }
-
-
-/* 래퍼: 노트와 버튼의 기준 폭 */
-.noteWrap{
-  position:relative;
-  width:340px;              /* 필요하면 조정 */
-  display:inline-block;
-}
-
-/* 노트 */
-.note{position:relative;max-width:220px;margin-top: -30px;}
-.note>img{ width:100%; display:block; }
-
-/* 노트 내부 텍스트 박스 */
-.noteText{
-  position:absolute;
-  left:28px;
-  right:28px;
-  bottom:36px;
-  display:flex;
-  flex-direction:column;
-  z-index:2;
-  color:#111;
-}
-.noteText h4{
-  margin:0 0 12px 0;
-  font-size:22px;
-  font-weight:800;
-}
-.noteText p{
-  margin:0;
-  line-height:1.5;
-  font-weight:600;
-  overflow-wrap:break-word; /* 줄바꿈 강제 */
-  word-break:keep-all;      /* 단어 단위 유지 */
-  hyphens:auto;             /* 하이픈 분할 허용(지원 브라우저) */
-}
-
-/* 밖으로 뺀 빨간 버튼: 노트 왼쪽 정렬 */
-.beta-btn-out{
-  display:inline-block;
-  background:#ff2b2b;
-  color:#fff;
-  font-weight:800;
-  border-radius:14px;
-  text-decoration:none;
-  transition:background .2s;
-}
-.beta-btn-out:hover{ background:#ff4646; }
 
 
 
@@ -229,10 +175,10 @@ if (window.matchMedia('(max-width: 768px)').matches) {
 </head>
 <body>
 <section class="hero">
-  <img src="img/thinkdifferent2.png" alt="background">
+  <img src="img/papillon.png" alt="background">
 <div class="hero-copy">
-  <h1>SuperAzerty</h1>
-  <p>L’accomplissement d’AZERTY</p>
+  <p>Papa, maman ont l’AZERTY.</p>
+  <h1>Nous, on a le Papillon.</h1>
 </div>
   <button class="enter" id="heroBtn">En savoir plus</button>
 </section>
@@ -243,7 +189,7 @@ if (window.matchMedia('(max-width: 768px)').matches) {
 
     <div class="slide on" data-step="0">
       <div class="s1-wrap">
-        <h1 class="title1">Votre AZERTY renaît en SuperAZERTY.</h1>
+        <h1 class="title1">L’accomplissement d’AZERTY</h1>
         <div class="bullets">
 		  <div>•&nbsp;&nbsp;Accents en un seul toucher, chiffres en un seul toucher.</div>
           <div>•&nbsp;&nbsp;Symboles sans utiliser AltGr.</div>
@@ -263,7 +209,7 @@ if (window.matchMedia('(max-width: 768px)').matches) {
         <div class="rule">
           <svg class="check" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="#10b981" d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg>
           <div class="ruleText">
-SuperAZERTY reconnaît ces lettres comme des accents lorsqu’elles suivent une virgule.<br>
+Papillon 1 reconnaît ces lettres comme des accents lorsqu’elles suivent une virgule.<br>
 Cependant, comme on met toujours un espace après la virgule en tant que signe de ponctuation, il n’y a jamais de conflit entre les deux cas.
           </div>
         </div>
@@ -282,7 +228,7 @@ Cependant, comme on met toujours un espace après la virgule en tant que signe d
           <div class="ruleText">
             Quand vous tapez une ellipse avec deux points, vous ajoutez toujours une espace ensuite.<br>
 Ainsi, ce schéma n’interfère jamais avec votre écriture normale.<br><br>
-Le point et les deux-points ont échangé leur place dans SuperAZERTY.<br>
+Le point et les deux-points ont échangé leur place dans Papillon 1.<br>
 La saisie du point devient ainsi plus pratique.
           </div>
 		  <img class="keysRow" src="img/dot_move.png" alt="five triggers">
@@ -320,7 +266,7 @@ C’est une bonne habitude de laisser une espace après celui-ci.)
         <div class="rule">
           <svg class="check" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="#10b981" d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg>
           <div class="ruleText">
-            SuperAZERTY reconnaît ces lettres comme des accents lorsqu’elles suivent un point d’exclamation. <br>
+            Papillon 1 reconnaît ces lettres comme des accents lorsqu’elles suivent un point d’exclamation. <br>
 			Cependant, comme on met toujours un espace après le point d’exclamation en tant que signe de ponctuation, il n’y a jamais de conflit entre les deux cas.<br>
 			(Les développeurs peuvent activer l’option développeur pour éviter tout conflit pendant la programmation.)
           </div>
@@ -338,7 +284,7 @@ C’est une bonne habitude de laisser une espace après celui-ci.)
         <div class="rule">
           <svg class="check" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="#10b981" d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg>
           <div class="ruleText">
-            On trouve toujours un u après q — SuperAzerty ne touche jamais à qu.<br>
+            On trouve toujours un u après q — Papillon 1 ne touche jamais à qu.<br>
 Ainsi, cette combinaison sert uniquement à la saisie des accents, en toute sécurité.<br>
 Si la transformation n’est pas souhaitée, appuyez simplement une fois sur Retour arrière pour l’annuler immédiatement.
           </div>
@@ -403,7 +349,7 @@ Si la transformation n’est pas souhaitée, appuyez simplement une fois sur Ret
       <div class="frame">
         <img class="keyIcon" src="img/tip.png" alt="semicolon trigger key">
         <h3 class="hd">Astuce pour les développeurs</h3>
-        <p class="sub">Q. SuperAzerty pose-t-il des problèmes pendant le codage ?<small></small><br>
+        <p class="sub">Q. Papillon 1 pose-t-il des problèmes pendant le codage ?<small></small><br>
 		A. Pas d’inquiétude.</p>
         <div class="rule">
           <svg class="check" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="#10b981" d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg>
@@ -431,65 +377,391 @@ Si la transformation n’est pas souhaitée, appuyez simplement une fois sur Ret
   </div>
 </div>
 
-<!-- DEMO (전체 교체본) -->
+
 <section id="demo">
   <div class="demoWrap">
     <div class="demoTop">
-      <div class="brand">SuperAzerty<small> Votre AZERTY est désormais SuperAZERTY.</small></div>
+      <div class="brand">Papillon<small> L’accomplissement d’AZERTY</small></div>
     </div>
 
-    <div class="surface">
-      <div class="padWrap">
-        <textarea id="pad" placeholder="Tapez ici..." spellcheck="false"></textarea>
-		<!-- Inline emoji panel for demo -->
-			<div id="emojiPanel" style="display:none; position:absolute; z-index:10;
-  background:#fff; color:#000; border:1px solid #fff; border-radius:12px;
-  padding:12px; box-shadow:0 8px 26px rgba(0,0,0,.20);
-  overflow:hidden; box-sizing:border-box; width:320px;">
-				<div id="emojiGrid" style="display:grid; grid-template-columns:repeat(8, 28px); gap:8px; font-size:22px; line-height:1; cursor:pointer;"></div>
-				<p style="margin:6px 0 0;text-align:center;font-size:18px;color:#777;">
-  (space : close)
-</p>
-
-			</div>
-
-			<!-- demo 하단 레이아웃 이미지 -->
-		<div class="layoutBar" style="margin:-30px 0 0; text-align:center;">
-			<p style="text-align:center; color:#ccc; font-size:16px; margin:0 0 6px;">
-👉 Les touches fléchées ne sont pas des touches mortes sur le produit réel.
-</p>
-
-			<img src="img/layout.png" alt="layout" style="max-width:80%; height:auto; display:inline-block;">
-		</div>
+    <!-- Papillon Demo (scoped) -->
+    <div id="papillonDemo" style="position:relative;">
+      <!-- IO panel -->
+      <div class="io" style="position:relative;max-width:1000px;margin:0 auto 14px;">
+        <textarea id="ppIO" rows="3" spellcheck="false"
+          style="
+            width:100%;
+            height:130px;
+            padding:20px 24px;
+            border-radius:12px;
+            border:1px solid #2a3959;
+            background:#111a2b;
+            color:#e9eef7;
+            outline:none;
+            resize:vertical;
+            box-shadow:0 8px 24px rgba(0,0,0,.25);
+            text-align:center;
+            font-size:64px;
+            line-height:1.35;
+            font-weight:800;
+            caret-color:#6ec1ff;
+          "></textarea>
       </div>
 
-      <!-- 노트 전체 수정본 -->
-      <div class="noteWrap" style="position:relative;width:340px;display:inline-block;">
-        <div class="note" style="position:relative;width:100%;">
-          <img src="img/note.png" alt="note area" style="width:100%;display:block;">
-          <div class="noteText"
-               style="position:absolute;left:28px;right:28px;top:180px;bottom:36px;
-                      display:flex;flex-direction:column;z-index:2;color:#111;overflow:hidden;">
-            <h4 style="margin:0 0 12px 0;font-size:22px;font-weight:800;">Remarque</h4>
-            <p style="margin:0;line-height:1.5;font-weight:500;
-                      overflow-wrap:break-word;word-break:keep-all;hyphens:auto;">
-              N’oubliez pas de vous inscrire au programme bêta gratuit !
-            </p>
-          </div>
+      <!-- Emoji Panel -->
+      <div id="ppEmojiPanel" aria-hidden="true">
+        <div id="ppEmojiGrid"><!-- JS가 버튼 48개 생성 --></div>
+      </div>
+
+      <!-- Keyboard -->
+      <div class="board">
+        <div class="row r1">
+          <div class="key"><span class="mark BL num">🙂</span><span class="mark TR sym">²</span></div>
+          <div class="key"><span class="mark BL num">1</span><span class="mark TR sym">&amp;</span></div>
+          <div class="key"><span class="mark BL num">2</span><span class="mark TR sym">«</span></div>
+          <div class="key"><span class="mark BL num">3</span><span class="mark TR sym">"</span></div>
+          <div class="key"><span class="mark BL num">4</span><span class="mark TR sym">»</span></div>
+          <div class="key"><span class="mark BL num">5</span><span class="mark TR sym">(</span></div>
+          <div class="key"><span class="mark BL num">6</span><span class="mark TR sym">-</span></div>
+          <div class="key"><span class="mark BL num">7</span><span class="mark TR sym">–</span></div>
+          <div class="key"><span class="mark BL num">8</span><span class="mark TR sym">_</span></div>
+          <div class="key"><span class="mark BL num">9</span><span class="mark TR sym">—</span></div>
+          <div class="key"><span class="mark BL num">0</span><span class="mark TR sym">•</span></div>
+          <div class="key"><span class="mark BL num">°</span><span class="mark TR sym">)</span></div>
+          <div class="key"><span class="mark BL num">+</span><span class="mark TR sym">=</span></div>
+          <div class="key bs"><span class="mark TL sym" style="left:6px;">Backspace</span></div>
         </div>
 
-        <!-- 버튼: 노트 아래 왼쪽 정렬 -->
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLSekvmqVIroU5Rv_BlXE0HNMWPcdfmNCeMReaZfrMdrTaGHcgg/viewform?usp=publish-editor" target="_blank"
-           style="display:inline-block;margin:5px 0 0 3px;padding:14px 20px;
-                  background:#ff2b2b;color:#fff;font-weight:800;border-radius:16px;
-                  text-decoration:none;font-size:20px;transition:background .2s;">
-          Rejoignez la bêta
-        </a>
+        <div class="row r2">
+          <div class="key"><span class="mark TL alpha-big">A</span></span><span class="mark BR sym" style="color:#6ec1ff;">@</span></div>
+          <div class="key"><span class="mark TL alpha-big">Z</span></div>
+          <div class="key"><span class="mark TL alpha-big">E</span><span class="mark BR sym" style="color:#6ec1ff;">€</span></div>
+          <div class="key"><span class="mark TL alpha-big">R</span></div>
+          <div class="key"><span class="mark TL alpha-big">T</span><span class="mark BR sym" style="color:#6ec1ff;">~</span></div>
+          <div class="key"><span class="mark TL alpha-big">Y</span></div>
+          <div class="key"><span class="mark TL alpha-big">U</span></div>
+          <div class="key"><span class="mark TL alpha-big">I</span></div>
+          <div class="key"><span class="mark TL alpha-big">O</span></div>
+          <div class="key"><span class="mark TL alpha-big">P</span><span class="mark BR sym" style="color:#6ec1ff;">|</span></div>
+          <div class="key arrow"><span class="mark BL num" style="left:5px;">→</span><span class="mark TR sym">←</span><span class="mark BR sym" style="color:#6ec1ff; right:6px;">Gr</span></div>
+          <div class="key"><span class="mark BL sym">$</span><span class="mark TR sym">£</span></div>
+          <div class="key wide" id="enter"><span class="mark TL sym">Enter</span></div>
+        </div>
+
+        <div class="row r3">
+          <div class="key"><span class="mark TL alpha-big">Q</span><span class="mark TR sym" style="color:#ff5555;">e</span></div>
+          <div class="key"><span class="mark TL alpha-big">S</span><span class="mark BR sym" style="color:#6ec1ff;">[</span></div>
+          <div class="key"><span class="mark TL alpha-big">D</span><span class="mark BR sym" style="color:#6ec1ff;">]</span></div>
+          <div class="key"><span class="mark TL alpha-big">F</span></div>
+          <div class="key"><span class="mark TL alpha-big">G</span></div>
+          <div class="key"><span class="mark TL alpha-big">H</span><span class="mark BR sym" style="color:#6ec1ff;">#</span></div>
+          <div class="key"><span class="mark TL alpha-big">J</span></div>
+          <div class="key"><span class="mark TL alpha-big">K</span></div>
+          <div class="key"><span class="mark TL alpha-big">L</span><span class="mark BR sym" style="color:#6ec1ff;"><</span></div>
+          <div class="key"><span class="mark TL alpha-big">M</span><span class="mark BR sym" style="color:#6ec1ff;">></span></div>
+          <div class="key"><span class="mark BL sym" style="font-size:28px;">'</span><span class="mark TR sym">%</span></div>
+          <div class="key"><span class="mark BL sym" style="font-size:28px;">*</span><span class="mark TR sym">μ</span></div>
+        </div>
+
+        <div class="row r4">
+          <div class="key wide" id="shiftL"><span class="mark TL sym">Shift</span></div>
+          <div class="key"><span class="mark TL alpha-big">W</span></div>
+          <div class="key"><span class="mark TL alpha-big">X</span></div>
+          <div class="key"><span class="mark TL alpha-big">C</span><span class="mark BR sym" style="color:#6ec1ff;">{</span></div>
+          <div class="key"><span class="mark TL alpha-big">V</span><span class="mark BR sym" style="color:#6ec1ff;">}</span></div>
+          <div class="key"><span class="mark TL alpha-big">B</span><span class="mark BR sym" style="color:#6ec1ff;">&#8726;</span></div>
+          <div class="key"><span class="mark TL alpha-big">N</span></div>
+
+          <div class="key">
+            <span class="mark BL alpha-big">,</span>
+            <span class="mark TR sym">?</span>
+            <span class="mark TL accent">´</span>
+          </div>
+
+          <div class="key">
+            <span class="mark BL alpha-big">;</span>
+            <span class="mark TR sym">:</span>
+            <span class="mark BR accent">¸</span>
+            <span class="mark TL accent">ˆ</span>
+          </div>
+
+          <div class="key">
+            <span class="mark BL alpha-big">.</span>
+            <span class="mark TR sym">/</span>
+            <span class="mark TL accent">¨</span>
+            <span class="mark BR sym" style="color:#6ec1ff;">·</span>
+          </div>
+
+          <div class="key">
+            <span class="mark BL alpha-big">!</span>
+            <span class="mark TR sym">§</span>
+            <span class="mark TL accent">`</span>
+          </div>
+
+          <div class="key wide" id="shiftR"><span class="mark TL sym">Shift</span></div>
+        </div>
+
+        <div class="row" style="justify-content:center;">
+          <div class="key space"></div>
+        </div>
       </div>
     </div>
-
   </div>
+
+  <!-- Scoped styles for Papillon Demo -->
+  <style>
+    #papillonDemo{
+      --bg:#0b1220;
+      --panel:#111a2b;
+      --key:#22324a;
+      --key-hover:#3b5188;
+      --key-border:#2a3959;
+      --txt:#e9eef7;
+      --muted:#a8b6cf;
+      --arrow:#6ec1ff;
+      --shadow:0 10px 30px rgba(0,0,0,.35);
+      --r1-offset:-3px; --r2-offset:90px; --r3-offset:70px; --r4-offset:0px;
+      --shiftL-w:152px; --shiftR-w:130px; --enter-w:72px;
+      --enter-x:0px; --shiftR-x:0px;
+      --big-hand: url('img/hand_big.png') 50 8, auto;
+      --emoji-pad-x: 3.5%;
+      --emoji-pad-top: 6.5%;
+      --emoji-pad-bottom: 7%;
+      color:var(--txt);
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Apple SD Gothic Neo, Noto Sans KR, Pretendard, Arial, sans-serif;
+    }
+    /* 강제 손가락 커서 */
+    #papillonDemo, #papillonDemo .board, #papillonDemo .row, #papillonDemo .key { cursor: var(--big-hand) !important; }
+
+    #papillonDemo .board{background:var(--panel); border:1px solid var(--key-border); border-radius:18px; box-shadow:var(--shadow); padding:18px; position:relative; top:9px; display:flex; flex-direction:column; align-items:center;}
+    #papillonDemo .row{display:flex; gap:8px; margin:6px 0; position:relative; justify-content:center}
+    #papillonDemo .row.r1{margin-left:var(--r1-offset)}
+    #papillonDemo .row.r2{margin-left:var(--r2-offset)}
+    #papillonDemo .row.r3{margin-left:var(--r3-offset)}
+    #papillonDemo .row.r4{margin-left:var(--r4-offset)}
+    #papillonDemo .key{position:relative; min-width:58px; height:64px; border-radius:12px; border:1px solid var(--key-border); background:var(--key); box-shadow:inset 0 -2px 0 rgba(255,255,255,.04); transition:background .08s ease, box-shadow .08s ease, transform .08s}
+    #papillonDemo .key:hover{background:var(--key-hover); box-shadow:0 0 0 2px rgba(255,255,255,.08), 0 10px 28px rgba(0,0,0,.35)}
+    #papillonDemo .key:active{transform:translateY(1px)}
+    #papillonDemo .key.wide{min-width:72px}
+    #papillonDemo .key.bs{min-width:102px}
+    #papillonDemo .key.space{min-width:360px; align-self:center;}
+    #papillonDemo .key.arrow:hover{filter:brightness(1.4)}
+    #papillonDemo .accent { color:#ff5555; font-weight:900; font-size:54px; }
+    #papillonDemo #shiftL{width:var(--shiftL-w)}
+    #papillonDemo #shiftR{width:var(--shiftR-w); margin-left:var(--shiftR-x);}
+    #papillonDemo #enter{width:var(--enter-w); margin-left:var(--enter-x);}
+    #papillonDemo .mark{position:absolute; line-height:1; font-weight:900; letter-spacing:.1px; pointer-events:none;}
+    #papillonDemo .mark.BR.accent { bottom:18px; }
+    #papillonDemo .TL{top:6px; left:8px;}
+    #papillonDemo .TR{top:6px; right:8px; text-align:right}
+    #papillonDemo .BL{bottom:6px; left:8px;}
+    #papillonDemo .BR{bottom:6px; right:8px; text-align:right}
+    #papillonDemo .alpha-big{font-size:26px}
+    #papillonDemo .num{font-size:22px}
+    #papillonDemo .sym{font-size:18px; opacity:.95}
+
+    /* Emoji Panel (scoped) */
+    #ppEmojiPanel{
+      position:absolute; z-index:50;
+      left:50%; transform:translateX(-50%);
+      top:260px;
+      background:#fff;
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:12px;
+      padding:12px;
+      box-shadow:0 8px 26px rgba(0,0,0,.35);
+      display:none;
+      font-family:"Segoe UI Emoji","Apple Color Emoji","Noto Color Emoji",sans-serif;
+    }
+    #ppEmojiPanel.show{ display:block; }
+    #ppEmojiGrid{
+      display:grid;
+      grid-template-columns:repeat(8, 44px);
+      gap:6px;
+      justify-items:center;
+      align-items:center;
+      font-family:"Segoe UI Emoji","Apple Color Emoji","Noto Color Emoji",sans-serif;
+    }
+    #ppEmojiGrid .emojiBtn{
+      border:0; background:none; width:32px; height:32px;
+      font-size:28px; line-height:1; cursor:pointer;
+      padding:0; border-radius:8px;
+    }
+	#papillonDemo #ppIO{
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+               "Apple SD Gothic Neo", "Noto Sans KR", Pretendard, Arial, sans-serif;
+}
+
+  </style>
+
+  <!-- Scoped script for Papillon Demo -->
+  <script>
+  (function () {
+    const io = document.getElementById('ppIO');
+    if (!io) return;
+
+    let shift = false;
+    let emojiOpen = false;
+
+    const $panel = document.getElementById('ppEmojiPanel');
+    const $grid  = document.getElementById('ppEmojiGrid');
+
+    const EMOJIS = Array.from('😀😁😂🤣😃😄😅😉😊😍😘😜🤔🤗🤩🥳😎😭😡🧡💔💢💦👍🙏✨🔥💯✅❌🌟🎉🎁📌🍔☕🚗✈🏡🏬※©®™👈👉👆👇');
+
+    function buildEmojiGrid(){
+      if (!$grid || $grid.childElementCount) return;
+      EMOJIS.forEach((em)=>{
+        const btn = document.createElement('button');
+        btn.className = 'emojiBtn';
+        btn.type = 'button';
+        btn.textContent = em;
+        btn.addEventListener('click', ()=>{
+          let v = io.value;
+          const s = io.selectionStart, e = io.selectionEnd;
+          const last = v.lastIndexOf('🙂');
+          if (last !== -1){
+            v = v.slice(0, last) + em + v.slice(last + 2);
+            io.value = v;
+            const caret = last + em.length;
+            io.selectionStart = io.selectionEnd = caret;
+          } else {
+            io.value = v.slice(0, s) + em + v.slice(e);
+            const caret = s + em.length;
+            io.selectionStart = io.selectionEnd = caret;
+          }
+          closeEmojiPanel(); io.focus();
+        });
+        $grid.appendChild(btn);
+      });
+    }
+    function openEmojiPanel(){ if(!$panel) return; buildEmojiGrid(); $panel.classList.add('show'); $panel.setAttribute('aria-hidden','false'); emojiOpen = true; }
+    function closeEmojiPanel(){ if(!$panel) return; $panel.classList.remove('show'); $panel.setAttribute('aria-hidden','true'); emojiOpen = false; }
+    document.addEventListener('keydown', ()=>{ if (emojiOpen) closeEmojiPanel(); });
+
+    const mapDev = { a:'@', e:'€', t:'~', p:'|', s:'[', d:']', h:'#', c:'{', v:'}', b:'\\', l:'<', m:'>', ';':'^', '!':'`', '.':'·' };
+    const mapLigE = { 'o':'œ','O':'Œ', 'a':'æ','A':'Æ' };
+    const mapAcute = {'a':'á','e':'é','i':'í','o':'ó','u':'ú','y':'ý','A':'Á','E':'É','I':'Í','O':'Ó','U':'Ú','Y':'Ý','c':'ć','C':'Ć','n':'ń','N':'Ń','s':'ś','S':'Ś','z':'ź','Z':'Ź','r':'ŕ','R':'Ŕ','l':'ĺ','L':'Ĺ','w':'ẃ','W':'Ẃ','g':'ǵ','G':'Ǵ','k':'ḱ','K':'Ḱ','m':'ḿ','M':'Ḿ','p':'ṕ','P':'Ṕ'};
+    const mapGrave = {'a':'à','e':'è','i':'ì','o':'ò','u':'ù','A':'À','E':'È','I':'Ì','O':'Ò','U':'Ù'};
+    const mapCirc  = {'a':'â','e':'ê','i':'î','o':'ô','u':'û','y':'ŷ','A':'Â','E':'Ê','I':'Î','O':'Ô','U':'Û','Y':'Ŷ'};
+    const maptrema = {'a':'ä','e':'ë','i':'ï','o':'ö','u':'ü','y':'ÿ','A':'Ä','E':'Ë','I':'Ï','O':'Ö','U':'Ü','Y':'Ÿ'};
+    const mapcedil = {'c':'ç','C':'Ç','s':'ş','S':'Ş','t':'ţ','T':'Ţ','g':'ģ','G':'Ģ','k':'ķ','K':'Ķ','l':'ļ','L':'Ļ','n':'ņ','N':'Ņ','r':'ŗ','R':'Ŗ','d':'ḑ','D':'Ḑ','h':'ḩ','H':'Ḩ'};
+    const mapTilde = {'a':'ã','A':'Ã','o':'õ','O':'Õ','e':'ẽ','E':'Ẽ','i':'ĩ','I':'Ĩ','u':'ũ','U':'Ũ','n':'ñ','N':'Ñ'};
+
+    function insert(text){
+      const s = io.selectionStart, e = io.selectionEnd, v = io.value;
+
+      if (s === e && s > 0 && v[s-1] === '→' && text.length === 1 && mapDev[text] !== undefined){
+        io.value = v.slice(0, s-1) + mapDev[text] + v.slice(e);
+        const caret = (s - 1) + 1; io.selectionStart = io.selectionEnd = caret; io.focus(); return;
+      }
+      if (s === e && s > 0 && (v[s-1] === 'q' || v[s-1] === 'Q') && text.length === 1 && mapLigE[text]){
+        io.value = v.slice(0, s-1) + mapLigE[text] + v.slice(e);
+        const caret = (s - 1) + 1; io.selectionStart = io.selectionEnd = caret; io.focus(); return;
+      }
+      if (s === e && s > 0 && v[s-1] === ',' && text.length === 1 && mapAcute[text]){
+        io.value = v.slice(0, s-1) + mapAcute[text] + v.slice(e);
+        const caret = (s - 1) + 1; io.selectionStart = io.selectionEnd = caret; io.focus(); return;
+      }
+      if (s === e && s > 0 && v[s-1] === ';' && text.length === 1){
+        let mapped = null;
+        if (mapCirc[text]) mapped = mapCirc[text];
+        else if (mapcedil[text]) mapped = mapcedil[text];
+        if (mapped){
+          io.value = v.slice(0, s-1) + mapped + v.slice(e);
+          const caret = (s - 1) + 1; io.selectionStart = io.selectionEnd = caret; io.focus(); return;
+        }
+      }
+      if (s === e && s > 1 && v.slice(s-2, s) === '..' && text.length === 1 && maptrema[text]){
+        io.value = v.slice(0, s-2) + maptrema[text] + v.slice(e);
+        const caret = (s - 2) + 1; io.selectionStart = io.selectionEnd = caret; io.focus(); return;
+      }
+      if (s === e && s > 1 && v.slice(s-2, s) === '!!' && text.length === 1 && mapTilde[text]){
+        io.value = v.slice(0, s-2) + mapTilde[text] + v.slice(e);
+        const caret = (s - 2) + 1; io.selectionStart = io.selectionEnd = caret; io.focus(); return;
+      }
+      if (s === e && s > 0 && v[s-1] === '!' && text.length === 1){
+        let mapped = null;
+        if ((text === 'n' || text === 'N') && mapTilde[text]) mapped = mapTilde[text];
+        else if (mapGrave[text]) mapped = mapGrave[text];
+        if (mapped){
+          io.value = v.slice(0, s-1) + mapped + v.slice(e);
+          const caret = (s - 1) + 1; io.selectionStart = io.selectionEnd = caret; io.focus(); return;
+        }
+      }
+
+      io.value = v.slice(0, s) + text + v.slice(e);
+      const caret = s + text.length;
+      io.selectionStart = io.selectionEnd = caret;
+      io.focus();
+    }
+
+    function backspace(){
+      const s = io.selectionStart, e = io.selectionEnd, v = io.value;
+      if (s !== e){
+        io.value = v.slice(0,s) + v.slice(e);
+        io.selectionStart = io.selectionEnd = s;
+      } else if (s>0){
+        io.value = v.slice(0,s-1) + v.slice(e);
+        io.selectionStart = io.selectionEnd = s-1;
+      }
+      io.focus();
+    }
+    function moveCaret(dx){
+      let c = io.selectionStart + dx;
+      c = Math.max(0, Math.min(io.value.length, c));
+      io.selectionStart = io.selectionEnd = c;
+      io.focus();
+    }
+
+    function getPrimaryChar(keyEl){
+      if (keyEl.classList.contains('space')) return ' ';
+      if (keyEl.id === 'enter') return '\\n';
+      if (keyEl.id === 'shiftL' || keyEl.id === 'shiftR') return '{SHIFT}';
+      if (keyEl.classList.contains('bs') || keyEl.textContent.trim().toLowerCase().includes('backspace')) return '{BS}';
+      if (keyEl.classList.contains('arrow')){
+        const bl = keyEl.querySelector('.mark.BL');
+        const tr = keyEl.querySelector('.mark.TR');
+        if (shift && tr) return tr.textContent.trim();
+        if (bl) return bl.textContent.trim();
+      }
+      const bl = keyEl.querySelector('.mark.BL');
+      const tl = keyEl.querySelector('.mark.TL');
+      const tr = keyEl.querySelector('.mark.TR');
+      const base = (bl?.textContent || tl?.textContent || '').trim();
+      const shifted = (tr?.textContent || '').trim();
+      if (shift && shifted) return shifted;
+      if (/^[A-Z]$/i.test(base)) return shift ? base.toUpperCase() : base.toLowerCase();
+      return base;
+    }
+
+    document.querySelector('#papillonDemo .board')?.addEventListener('click', (ev)=>{
+      const key = ev.target.closest('.key');
+      if (!key) return;
+      const out = getPrimaryChar(key);
+      if (out === '🙂'){ openEmojiPanel(); }
+      if (out === '{SHIFT}'){ shift = !shift; key.classList.toggle('shift-on', shift); return; }
+      if (out === '{BS}'){ backspace(); return; }
+      if (out === '{ARROW}'){
+        const rect = key.getBoundingClientRect();
+        const left = ev.clientX < (rect.left + rect.width/2);
+        moveCaret(left ? -1 : +1);
+        return;
+      }
+      if (!out) return;
+      insert(out);
+      if (emojiOpen && out !== '🙂') closeEmojiPanel();
+      if (shift){
+        shift = false;
+        document.getElementById('shiftL')?.classList.remove('shift-on');
+        document.getElementById('shiftR')?.classList.remove('shift-on');
+      }
+    });
+
+    io.focus();
+  })();
+  </script>
 </section>
+
 
 <script>
 // Modal & navigation
@@ -567,555 +839,7 @@ closeBtn.addEventListener('click',closeModal);
 
 </script>
 
-<!-- Attach original JS logic, then clear any prefilled guide text -->
-<script>
 
-(() => {
-  const pad = document.getElementById('pad');
-
-  const vowels = 'aeiouyAEIOUY';
-  const mapAcute = {
-  'a':'á','e':'é','i':'í','o':'ó','u':'ú','y':'ý',
-  'A':'Á','E':'É','I':'Í','O':'Ó','U':'Ú','Y':'Ý',
-  // extended to consonants
-  'c':'ć','C':'Ć',
-  'n':'ń','N':'Ń',
-  's':'ś','S':'Ś',
-  'z':'ź','Z':'Ź',
-  'r':'ŕ','R':'Ŕ',
-  'l':'ĺ','L':'Ĺ',
-  'w':'ẃ','W':'Ẃ',
-  'g':'ǵ','G':'Ǵ',
-  'k':'ḱ','K':'Ḱ',
-  'm':'ḿ','M':'Ḿ',
-  'p':'ṕ','P':'Ṕ'
-};
-  const mapGrave = {'a':'à','e':'è','i':'ì','o':'ò','u':'ù','A':'À','E':'È','I':'Ì','O':'Ò','U':'Ù'};
-  const mapCirc  = {'a':'â','e':'ê','i':'î','o':'ô','u':'û','y':'ŷ','A':'Â','E':'Ê','I':'Î','O':'Ô','U':'Û','Y':'Ŷ'};
-  const maptréma = {'a':'ä','e':'ë','i':'ï','o':'ö','u':'ü','y':'ÿ','A':'Ä','E':'Ë','I':'Ï','O':'Ö','U':'Ü','Y':'Ÿ'};
-  const mapcédille = {
-    'c':'ç','C':'Ç',
-    's':'ş','S':'Ş',
-    't':'ţ','T':'Ţ',
-    'g':'ģ','G':'Ģ',
-    'k':'ķ','K':'Ķ',
-    'l':'ļ','L':'Ļ',
-    'n':'ņ','N':'Ņ',
-    'r':'ŗ','R':'Ŗ',
-    'd':'ḑ','D':'Ḑ',
-    'h':'ḩ','H':'Ḩ'
-  };
-const mapStroke = {
-  'o':'ø','O':'Ø',
-  'd':'đ','D':'Đ',
-  'h':'ħ','H':'Ħ',
-  'l':'ł','L':'Ł',
-  't':'ŧ','T':'Ŧ',
-  'g':'ǥ','G':'Ǥ'
-};
-const mapCaron = {
-  'a':'ǎ','A':'Ǎ',
-  'c':'č','C':'Č',
-  's':'š','S':'Š',
-  'z':'ž','Z':'Ž',
-  'r':'ř','R':'Ř',
-  'd':'ď','D':'Ď',
-  't':'ť','T':'Ť',
-  'n':'ň','N':'Ň',
-  'e':'ě','E':'Ě',
-  'l':'ľ','L':'Ľ'
-};
-const mapDotAbove = {
-  'a':'ȧ','A':'Ȧ',
-  'b':'ḃ','B':'Ḃ',
-  'c':'ċ','C':'Ċ',
-  'd':'ḋ','D':'Ḋ',
-  'e':'ė','E':'Ė',
-  'f':'ḟ','F':'Ḟ',
-  'g':'ġ','G':'Ġ',
-  'h':'ḣ','H':'Ḣ',
-  'm':'ṁ','M':'Ṁ',
-  'n':'ṅ','N':'Ṅ',
-  'o':'ȯ','O':'Ȯ',
-  'p':'ṗ','P':'Ṗ',
-  'r':'ṙ','R':'Ṙ',
-  's':'ṡ','S':'Ṡ',
-  't':'ṫ','T':'Ṫ',
-  'w':'ẇ','W':'Ẇ',
-  'x':'ẋ','X':'Ẋ',
-  'y':'ẏ','Y':'Ẏ',
-  'z':'ż','Z':'Ż'
-};
-
-const mapTilde = {
-  'a':'ã','A':'Ã',
-  'o':'õ','O':'Õ',
-  'e':'ẽ','E':'Ẽ',
-  'i':'ĩ','I':'Ĩ',
-  'u':'ũ','U':'Ũ',
-  'n':'ñ','N':'Ñ'
-};
-
-  // ---- caret utils
-  const sel = el => ({start: el.selectionStart, end: el.selectionEnd, val: el.value});
-  const setCaret = (el, p) => { el.selectionStart = el.selectionEnd = p; };
-  const countTrailing = (el, ch) => {
-    const {start, val} = sel(el); let i=start-1, c=0; while(i>=0 && val[i]===ch){c++; i--;} return c;
-  };
-  const hasTrailingOne = (el, ch) => {
-    const {start, val} = sel(el); return start>0 && val[start-1]===ch;
-  };
-  function replaceRange(el, from, to, text){
-    const {val} = sel(el);
-    el.value = val.slice(0, from) + text + val.slice(to);
-    setCaret(el, from + text.length);
-  }
-  let lastUndo = null;
-  function snapshot() {
-    const {start, end, val} = sel(pad);
-    lastUndo = {val, start};
-  }
-function restore() {
-  if (!lastUndo) return;
-
-  // 1) 저장해 둔 스냅샷으로 되돌림
-  pad.value = lastUndo.val;
-  setCaret(pad, lastUndo.start);
-
-  // 2) 복구 직후 “다음 1타만” 같은 모음이면 변환 무시하도록 플래그 장전
-  //    (lastTransform는 2번 단계에서 각 변환 분기에서 채워둔 메타)
-  bypassOnce = lastTransform ? { ...lastTransform } : null;
-
-  // 3) 한 번만 쓰는 스냅샷 비우기
-  lastUndo = null;
-}
-
-// ---- smart-bypass state (post-restore용 메타 & 1회성 바이패스 플래그)
-let lastTransform = null;   // { trigger: string, target: string, posAfterTrigger: number }
-let bypassOnce    = null;   // { trigger: string, target: string, posAfterTrigger: number }
-
-  pad.addEventListener('keydown', (ev) => {
-    // 타이핑 시작하면 이전 변환 복구 스냅샷 폐기
-  if (!ev.ctrlKey && !ev.metaKey && !ev.altKey && ev.key !== 'Backspace' && ev.key !== 'Escape') {
-    lastUndo = null;
-  }
-
-// === Emoji panel (demo only) ===
-const emojiPanel = document.getElementById('emojiPanel');
-const emojiGrid  = document.getElementById('emojiGrid');
-const EMOJIS = Array.from('😀😁😂🤣😃😄😅😉😊😍😘😜🤔🤗🤩🥳😎😭😡🧡💔💢💦👍🙏✨🔥💯✅❌🌟🎉🎁📌🍔☕🚗✈🏡🏬※©®™👈👉👆👇');
-function ensureEmojiGrid() {
-  if (!emojiGrid || emojiGrid.childElementCount) return;
-  EMOJIS.forEach(e => {
-    const b = document.createElement('button');
-    b.type = 'button';
-    // 화살표류는 색 이모지 강제(Emoji Presentation)
-	const needsVS16 = /^(?:[←→↑↓↔↕⟵⟶⟷])$/u.test(e);
-	b.textContent = needsVS16 ? (e + '\uFE0F') : e;
-
-    b.style.cssText = 'border:0;background:none;width:38px;height:38px;font-size:28px;line-height:1;cursor:pointer;';
-
-b.addEventListener('click', () => {
-  const picked = e;
-    const { from, to } = lastDefaultEmoji;
-    pad.setSelectionRange(from, to);
-    pad.setRangeText(picked, from, to, 'end');
-    lastDefaultEmoji = null;
-  
-  closeEmojiPanel();
-  pad.focus();
-});
-
-    emojiGrid.appendChild(b);
-  });
-}
-
-function insertAtCaret(text){
-  const s = pad.selectionStart ?? pad.value.length;
-  const e = pad.selectionEnd ?? pad.value.length;
-  const v = pad.value ?? '';
-  pad.value = v.slice(0, s) + text + v.slice(e);
-  pad.selectionStart = pad.selectionEnd = s + text.length;
-}
-
-function openEmojiPanel(){
-  ensureEmojiGrid();
-  // pad 커서 아래쪽에 띄우기
-  const rectPad = pad.getBoundingClientRect();
-  const sel = pad.selectionStart ?? 0;
-
-  // 대충 pad 왼쪽 하단 기준으로 고정 (정확 커서 추적은 복잡하니 간단히)
-	emojiPanel.style.display = 'block';
-	emojiPanel.style.left = '12px';                  // ← 중앙정렬용 '' 아니고 12px
-	emojiPanel.style.top  = (rectPad.height - 48) + 'px';
-
-  // 밖 클릭/ESC로 닫기
-  window.addEventListener('mousedown', onOutsideClose, { capture:true });
-  window.addEventListener('keydown', onEscClose);
-}
-
-function closeEmojiPanel(){
-	lastDefaultEmoji = null; // 닫을 때도 리셋(스페이스로 닫고 나중에 클릭해도 과거걸 안 지움)
-  if (!emojiPanel) return;
-  emojiPanel.style.display = 'none';
-  window.removeEventListener('mousedown', onOutsideClose, { capture:true });
-  window.removeEventListener('keydown', onEscClose);
-}
-function onOutsideClose(e){
-  if (!emojiPanel.contains(e.target)) closeEmojiPanel();
-}
-function onEscClose(e){
-  if (e.key === 'Escape') { e.preventDefault(); closeEmojiPanel(); }
-}
-
-
-  // 콜론(:) → 점(.)으로 대체 처리 (트리거용), 중복 삽입 방지
-  if (ev.key === ':') {
-    ev.preventDefault();
-	lastUndo = null;
-    const s = pad.selectionStart ?? pad.value.length;
-    const e = pad.selectionEnd ?? pad.value.length;
-    const v = pad.value ?? '';
-    // 점 하나만 삽입
-    pad.value = v.slice(0, s) + '.' + v.slice(e);
-    pad.selectionStart = pad.selectionEnd = s + 1;
-    return;
-  }
-
-  // 점(.) → 콜론(:) 리맵 (사용자 표시용)
-  if (ev.key === '.') {
-    ev.preventDefault();
-	lastUndo = null;
-    const s = pad.selectionStart ?? pad.value.length;
-    const e = pad.selectionEnd ?? pad.value.length;
-    const v = pad.value ?? '';
-    pad.value = v.slice(0, s) + ':' + v.slice(e);
-    pad.selectionStart = pad.selectionEnd = s + 1;
-    return;
-  }
- 
- const remap = {
-  '.': ':',
-  'ù': "'",
-  '&': '1',
-  'é': '2',
-  '"': '3',
-  "'": '4',
-  '(': '5',
-  '-': '6',
-  'è': '7',
-  '_': '8',
-  'ç': '9',
-  'à': '0',
-  '1': '&',
-  '2': '«',
-  '3': '"',
-  '4': '»',
-  '5': '(',
-  '6': '-',
-  '7': '–',
-  '8': '_',
-  '9': '—',
-  '0': '•',
-  ')': '°',
-  '°': ')',
-  '+': '=',
-  '=': '+',
-  'â': '@',
-  'ê': '€',
-  '^': '→ ',
-  '¨': '← '
-};
-  if (remap[ev.key]) {
-    ev.preventDefault();
-	lastUndo = null;
-    const s = pad.selectionStart ?? pad.value.length;
-    const e = pad.selectionEnd ?? pad.value.length;
-    const v = pad.value ?? '';
-    const out = remap[ev.key];
-    pad.value = v.slice(0, s) + out + v.slice(e);
-    pad.selectionStart = pad.selectionEnd = s + out.length;
-    return;
-  }
-  
-  // ² : 단일 → 이모지 패널, Shift+² → '²' 입력
-if (ev.key === '²') {
-  ev.preventDefault();
-  if (ev.shiftKey) {
-    // Shift+²는 실제 ² 입력
-    const s = pad.selectionStart ?? pad.value.length;
-    const e2 = pad.selectionEnd ?? pad.value.length;
-    const v = pad.value ?? '';
-    pad.value = v.slice(0, s) + '²' + v.slice(e2);
-    pad.selectionStart = pad.selectionEnd = s + 1;
-  } else {
-    // 단일 ² → 데모용 이모지 패널 열기/토글
-	insertAtCaret('🙂');
-	// 기본 🙂 삽입 직후 위치 기억
-{
-  const caret = pad.selectionStart ?? pad.value.length;
-  const len = '🙂'.length;           // JS에서는 2 (서로게이트 페어)
-  lastDefaultEmoji = { from: caret - len, to: caret };
-}
-
-    openEmojiPanel();
-  }
-  return;
-}
-
-if (ev.key === ' ' && lastDefaultEmoji) {
-  if (emojiPanel.style.display === 'block') {
-    // 패널이 열려 있을 때는 닫기만 (공란 입력 방지)
-    ev.preventDefault();
-    closeEmojiPanel();
-  } else {
-    // 패널이 닫힌 상태에서는 그냥 스페이스 정상 입력
-    closeEmojiPanel();
-  }
-  return;
-}
-
-// 평소에는 스페이스 정상 입력
-
-
-	if (ev.key === 'Enter') return; // 기본 엔터 입력 허용
-    if (ev.key === 'Escape') { ev.preventDefault(); restore(); return; }
-    if (ev.ctrlKey || ev.metaKey || ev.altKey) return;
-	
-	if (lastUndo && ev.key !== 'Backspace' && ev.key !== 'Escape') {
-    lastUndo = null;
-  }
-	
-  if (ev.key === 'Backspace' && lastUndo) {
-    ev.preventDefault();   // 기본 삭제 막고
-    restore();             // ← Esc와 같은 복구 실행
-    return;                // 이후 변환 분기들로 안 내려감
-  }	
-	
-    const k = ev.key;
-    if (k.length !== 1) return;
-if (bypassOnce) {
-  const k = ev.key;                 // 방금 누른 키(문자 1개)
-  const { posAfterTrigger, target } = bypassOnce;
-
-  // 커서가 트리거 바로 뒤에 있고, 이번 키가 '동일 타겟(대/소문자 구분)'이면 개입 금지
-  if (pad.selectionStart === posAfterTrigger && k === target) {
-    bypassOnce = null;              // 1회성 소모
-    return;                         // 아무 변환도 하지 않고 그대로 통과
-  }
-  // 위치가 달라졌거나 다른 키면 바이패스 해제하고 평소 로직 진행
-  bypassOnce = null;
-}
-if (countTrailing(pad, ',') >= 2 && mapStroke[k]) {
-  ev.preventDefault(); snapshot();
-  const cnt = countTrailing(pad, ',');       // 2,3,4...
-  const keep = Math.max(0, cnt - 2);
-  const { start, val } = sel(pad);
-  const left  = val.slice(0, start - cnt) + ','.repeat(keep);
-  const right = val.slice(start);
-  const out   = mapStroke[k];
-
-  lastTransform = { trigger: ',,', target: k, posAfterTrigger: (start - cnt) + keep + 2 };
-  pad.value = left + out + right;
-  setCaret(pad, left.length + out.length);
-  return;
-}
-if (countTrailing(pad, ';') >= 2 && mapCaron[k]) {
-  ev.preventDefault(); snapshot();
-  const cnt = countTrailing(pad, ';');       // 2,3,4...
-  const keep = Math.max(0, cnt - 2);
-  const { start, val } = sel(pad);
-  const left  = val.slice(0, start - cnt) + ';'.repeat(keep);
-  const right = val.slice(start);
-  const out   = mapCaron[k];
-
-  lastTransform = { trigger: ';;', target: k, posAfterTrigger: (start - cnt) + keep + 2 };
-  pad.value = left + out + right;
-  setCaret(pad, left.length + out.length);
-  return;
-}
-if (countTrailing(pad, 'q') === 1 && (k==='a'||k==='A'||k==='o'||k==='O'||k==='s'||k==='S')) {
-  ev.preventDefault(); snapshot();
-  const { start } = sel(pad);
-  let out = k;
-  if (k === 'a') out = 'æ';
-  else if (k === 'A') out = 'Æ';
-  else if (k === 'o') out = 'œ';
-  else if (k === 'O') out = 'Œ';
-  else if (k === 's') out = 'ß';
-  else if (k === 'S') out = 'ẞ';
-
-  lastTransform = { trigger: 'q', target: k, posAfterTrigger: (start - 1) + 1 };
-  replaceRange(pad, start - 1, start, out);
-  return;
-}
-if (countTrailing(pad, 'q') >= 2 && mapDotAbove[k]) {
-  ev.preventDefault(); snapshot();
-  const cnt = countTrailing(pad, 'q');       // 2,3,...
-  const keep = Math.max(0, cnt - 2);
-  const { start, val } = sel(pad);
-  const left  = val.slice(0, start - cnt) + 'q'.repeat(keep);
-  const right = val.slice(start);
-  const out   = mapDotAbove[k];
-
-  lastTransform = { trigger: 'qq', target: k, posAfterTrigger: (start - cnt) + keep + 2 };
-  pad.value = left + out + right;
-  setCaret(pad, left.length + out.length);
-  return;
-}
-if ((k==='a'||k==='e'||k==='i'||k==='o'||k==='u'||k==='A'||k==='E'||k==='I'||k==='O'||k==='U') && hasTrailingOne(pad,'`')) {
-  ev.preventDefault(); snapshot();
-  const {start} = sel(pad);
-  const out = mapGrave[k] || k;
-  lastTransform = { trigger: '`', target: k, posAfterTrigger: (start - 1) + 1 };
-  replaceRange(pad, start-1, start, out);
-  return;
-}
-if (hasTrailingOne(pad, '!')) {
-  const _k = ev.key; // (기존 k와 충돌 방지용)
-  if (
-    _k==='a'||_k==='e'||_k==='i'||_k==='o'||_k==='u'||_k==='n'||
-    _k==='A'||_k==='E'||_k==='I'||_k==='O'||_k==='U'||_k==='N'
-  ) {
-    ev.preventDefault(); snapshot();
-    const { start } = sel(pad);
-
-    // n/N만 ñ/Ñ, 나머지는 기존 그레이브 맵 사용
-    const out =
-      _k==='n' ? 'ñ' :
-      _k==='N' ? 'Ñ' :
-      (mapGrave && mapGrave[_k]) ? mapGrave[_k] : _k;
-
-    // '?' 바로 앞의 트리거 한 글자를 결과로 치환
-    lastTransform = { trigger: '!', target: _k, posAfterTrigger: (start - 1) + 1 };
-    replaceRange(pad, start - 1, start, out);
-    return;
-  }
-}
-if (hasTrailingOne(pad, '~') && mapTilde[k]) {
-  ev.preventDefault(); snapshot();
-  const { start } = sel(pad);
-  const out = mapTilde[k];
-  lastTransform = { trigger: '~', target: k, posAfterTrigger: (start - 1) + 1 };
-  replaceRange(pad, start - 1, start, out);
-  return;
-}
-    if (vowels.includes(k) && countTrailing(pad, '.') >= 2) {
-      ev.preventDefault(); snapshot();
-      const cnt = countTrailing(pad, '.');           // 2,3,4...
-      const keep = Math.max(0, cnt-2);               // keep (cnt-2) dots
-      const {start, val} = sel(pad);
-      const left = val.slice(0, start - cnt) + '.'.repeat(keep);
-      const right = val.slice(start);
-      const out = maptréma[k] || k;
-	  lastTransform = { trigger: '..', target: k, posAfterTrigger: (start - cnt) + keep + 2 };
-      pad.value = left + out + right;
-      setCaret(pad, left.length + out.length);
-      return;
-    }
-    if (countTrailing(pad, ',') >= 1 && mapAcute[k]) {
-      ev.preventDefault(); snapshot();
-      const cnt = countTrailing(pad, ',');           // 1 or more
-      const keep = Math.max(0, cnt-1);               // keep (cnt-1) commas
-      const {start, val} = sel(pad);
-      const left = val.slice(0, start - cnt) + ','.repeat(keep);
-      const right = val.slice(start);
-      const out = mapAcute[k] || k;
-      lastTransform = {
-        trigger: ',',
-        target: k,
-        posAfterTrigger: (start - cnt) + keep + 1
-      };
-      pad.value = left + out + right;
-      setCaret(pad, left.length + out.length);
-      return;
-    }
-	
-    if (countTrailing(pad, '^') >= 1 && mapDev[k]) {
-      ev.preventDefault(); snapshot();
-      const cnt = countTrailing(pad, '^');           // 1 or more
-      const keep = Math.max(0, cnt-1);               // keep (cnt-1) commas
-      const {start, val} = sel(pad);
-      const left = val.slice(0, start - cnt) + '^'.repeat(keep);
-      const right = val.slice(start);
-      const out = mapDev[k] || k;
-      lastTransform = {
-        trigger: '^',
-        target: k,
-        posAfterTrigger: (start - cnt) + keep + 1
-      };
-      pad.value = left + out + right;
-      setCaret(pad, left.length + out.length);
-      return;
-    }
-	
-    if (vowels.includes(k) && countTrailing(pad, ';') >= 1) {
-      ev.preventDefault(); snapshot();
-      const cnt = countTrailing(pad, ';');
-      const keep = Math.max(0, cnt-1);
-      const {start, val} = sel(pad);
-      const left = val.slice(0, start - cnt) + ';'.repeat(keep);
-      const right = val.slice(start);
-      const out = mapCirc[k] || k;
-	  
-	  lastTransform = { trigger: ';', target: k, posAfterTrigger: (start - cnt) + keep + 1 };
-	  
-      pad.value = left + out + right;
-      setCaret(pad, left.length + out.length);
-      return;
-    }
-    // Priority note: vowels keep circonflexe (handled above). cédille applies to non-vowel letters with mappings.
-    if (countTrailing(pad, ';') >= 1 && !vowels.includes(k) && mapcédille[k]) {
-      ev.preventDefault(); snapshot();
-      const cnt = countTrailing(pad, ';');
-      const keep = Math.max(0, cnt-1);
-      const {start, val} = sel(pad);
-      const left = val.slice(0, start - cnt) + ';'.repeat(keep);
-      const right = val.slice(start);
-      const out = mapcédille[k];
-      lastTransform = { trigger: ';', target: k, posAfterTrigger: (start - cnt) + keep + 1 };
-      pad.value = left + out + right;
-      setCaret(pad, left.length + out.length);
-      return;
-    }
-    if ((k==='a'||k==='e'||k==='i'||k==='o'||k==='u'||k==='A'||k==='E'||k==='I'||k==='O'||k==='U') && hasTrailingOne(pad,'`')) {
-      ev.preventDefault(); snapshot();
-      const {start} = sel(pad);
-      const out = mapGrave[k] || k;
-	  lastTransform = { trigger: '`', target: k, posAfterTrigger: (start - 1) + 1 };
-      replaceRange(pad, start-1, start, out);
-      return;
-    }
-  });
-  
-/* DEV: ^x → 기호 (가림 현상 강제 해제) */
-pad.addEventListener('input', () => {
-  const v = pad.value || '';
-  const s = pad.selectionStart ?? v.length;
-  if (s < 2) return;
-
-  const head = v[s - 2];
-  const tail = v[s - 1];
-
-  // ^ 다음 한 글자만 개발자 맵
-  const mapDev = { r:'\\', t:'~', p:'|', s:'[', d:']', g:'`', h:'#', c:'^', b:'{', n:'}', l:'<', m:'>' };
-  const out = (head === '^') ? mapDev[tail] : null;
-  if (!out) return;
-
-  // 1틱 늦춰서 IME/조합 표시가 확정된 뒤 가림 해제
-  requestAnimationFrame(() => {
-    const v2 = pad.value || '';
-    const s2 = pad.selectionStart ?? v2.length;
-    if (s2 >= 2 && v2[s2 - 2] === '^' && v2[s2 - 1] === tail) {
-      pad.setRangeText(out, s2 - 2, s2, 'end'); // '^x' → out
-      pad.blur(); pad.focus();                  // 조합 가림 강제 해제
-    }
-  });
-});
-
-})();
-
-</script>
 <script>
 // After original logic loads, clear any prefilled demo hints
 window.addEventListener('load', function(){
@@ -1126,35 +850,17 @@ window.addEventListener('load', function(){
 
 <!-- ===== Reviews: Accents Libres (copied style) ===== -->
 <section id="reviews" style="background:#f3f1e7; padding:64px 0; font-family:var(--ui-font);">
-  <h2 style="text-align:center; font-size:42px; margin:0 0 12px; color:#000;">Laissez un avis</h2>
-  <p style="text-align:center; margin:0 0 28px; line-height:1.6; color:#333;">
-    SuperAzerty - L’accomplissement d’AZERTY
+  <h2 style="text-align:center; font-size:42px; margin:0 0 12px; color:#000;">Votre AZERTY renaît en Papillon.</h2>
+  <p style="text-align:center; font-size:26px; margin:0 0 28px; line-height:1.6; color:#333;">
+    
   </p>
 
-  <!-- form -->
-  <div style="max-width:760px; margin:0 auto; background:#fff; border-radius:14px; padding:20px; box-shadow:0 2px 8px rgba(0,0,0,.06);">
-    <form id="reviewForm" style="display:grid; grid-template-columns:1fr 200px; gap:12px 16px; align-items:center;">
-      <input id="rvName" type="text" placeholder="Pseudonyme (facultatif)" style="grid-column:1/2; height:46px; border:1px solid #ddd; border-radius:10px; padding:0 12px; font-size:16px;">
-      <div style="grid-column:2/3; display:flex; align-items:center; gap:8px; justify-content:flex-end;">
-        <span style="font-size:14px; color:#666;">Évaluation</span>
-        <div id="rvStars" aria-label="rating" style="display:flex; cursor:pointer; font-size:24px; line-height:1;"></div>
-      </div>
-      <!-- spam honeypot -->
-      <input id="rvHoney" style="display:none">
 
-      <textarea id="rvText" required placeholder="Laissez votre avis (obligatoire)" style="grid-column:1/3; min-height:120px; border:1px solid #ddd; border-radius:10px; padding:12px; font-size:16px; resize:vertical;"></textarea>
-      <button type="submit" style="grid-column:1/3; height:48px; border:0; border-radius:10px; font-size:16px; font-weight:700; background:#222; color:#fff; cursor:pointer;">Envoyer</button>
-      <div style="grid-column:1/3; font-size:13px; color:#777; text-align:right;">Le pseudonyme est facultatif, mais la note et l’avis sont obligatoires.</div>
-    </form>
-  </div>
-
-  <!-- list -->
-  <div id="rvList" style="max-width:760px; margin:24px auto 0; display:flex; flex-direction:column; gap:16px;"></div>
 </section>
 
 <script>
 (function(){
-  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw1UKKakpiYdMfZlTz8gJv5r8euypyT0W-4-EdhMkEsAhMq3AEVhuQd2xTOn_ws6q_ptA/exec';
+  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwTzh_MjFPGovDhjDg5RTImE4g7HljZDDmNxZJ3giOZhkLhxDSaPhmqdhaM3SIMgSWluA/exec';
   const $reviewsSec = document.getElementById('reviews');
   const $form  = document.getElementById('reviewForm');
   const $name  = document.getElementById('rvName');
@@ -1219,7 +925,12 @@ window.addEventListener('load', function(){
     s.src = SCRIPT_URL + '?n=20&callback=__onReviews&ts=' + Date.now();
     document.head.appendChild(s);
   }
+  if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', loadReviewsJSONP);
+} else {
+  loadReviewsJSONP();
+}
+
 
   $form.addEventListener('submit', async (e)=>{
     e.preventDefault();
@@ -1231,7 +942,8 @@ window.addEventListener('load', function(){
     const item={name, stars:starVal, text};
     $list.insertAdjacentHTML('afterbegin', cardHTML(item));
     try{
-      await fetch(SCRIPT_URL,{method:'POST', mode:'no-cors', body: JSON.stringify(item)});
+      await fetch(SCRIPT_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(item) });
+
       setTimeout(loadReviewsJSONP, 1200);
     }catch(e){}
     if($name) $name.value='';
@@ -1272,11 +984,7 @@ window.addEventListener('load', function(){
   const dock = document.createElement('div');
   dock.id = 'reviewsDock';
   dock.style.cssText = 'max-width:1120px;margin:16px auto 34px;display:flex;justify-content:center;';
-  const cue = document.createElement('div');
-  cue.id = 'reviewsCue';
-  cue.innerHTML = '<span class="chev">▼</span><span id="rvCueText">View Reviews</span>';
-  cue.addEventListener('click',()=>reviews.scrollIntoView({behavior:'smooth', block:'start'}));
-  dock.appendChild(cue);
+  
 
   // insert after demoWrap
   demoWrap.parentNode.insertBefore(dock, demoWrap.nextSibling);
@@ -1296,9 +1004,9 @@ window.addEventListener('load', function(){
   color:#555;
   border-top:1px solid #ddd;
 ">
-  <div>SuperAzerty © 2025</div>
+  <div>Capstary © 2025</div>
   <div style="margin-top:6px;">
-    Contact : <a href="mailto:contact@SuperAzerty.com" style="color:#333;text-decoration:none;">contact@SuperAzerty.com</a>
+    Contact : <a href="mailto:contact@Capstary.com" style="color:#333;text-decoration:none;">contact@Capstary.com</a>
   </div>
 </footer>
 </body>
@@ -1492,6 +1200,8 @@ html, body { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
     pad.dispatchEvent(new Event('input', { bubbles: true }));
   });
   pad.addEventListener('input', () => {
+  if (__justTransformed) { __justTransformed = false; return; }
+
     if (pad.selectionStart !== pad.selectionEnd) return;
     const s = (pad.selectionStart ?? (pad.value ? pad.value.length : 0));
     if (s < 2) return;
@@ -1504,6 +1214,8 @@ html, body { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
 
 // === Dead-key 결과 감지 후 개발자 변환 (circumflex only) ===
 pad.addEventListener('input', () => {
+if (__justTransformed) { __justTransformed = false; return; }
+
   const v = pad.value || '';
   if (!v) return;
   const s = pad.selectionStart ?? v.length;
