@@ -13,7 +13,7 @@
   .hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
   .hero .enter{position:absolute;right:5vw;bottom:8vh;background:var(--btn);color:#fff;font-weight:700;border:none;border-radius:999px;padding:16px 28px;font-size:22px;cursor:pointer}
     .hero-copy {
-    position: absolute; right: 7vw; top: 45vh;
+    position: absolute; right: 9vw; top: 45vh;
     color: #fff; text-align: left; z-index: 2;
     pointer-events: none; /* 아래 버튼 클릭 막지 않게 */
     text-shadow: 0 2px 10px rgba(0,0,0,.35);
@@ -539,9 +539,17 @@ Si la transformation n’est pas souhaitée, appuyez simplement une fois sur Ret
     #papillonDemo .row.r2{margin-left:var(--r2-offset)}
     #papillonDemo .row.r3{margin-left:var(--r3-offset)}
     #papillonDemo .row.r4{margin-left:var(--r4-offset)}
-    #papillonDemo .key{position:relative; min-width:58px; height:64px; border-radius:12px; border:1px solid var(--key-border); background:var(--key); box-shadow:inset 0 -2px 0 rgba(255,255,255,.04); transition:background .08s ease, box-shadow .08s ease, transform .08s}
-    #papillonDemo .key:hover{background:var(--key-hover); box-shadow:0 0 0 2px rgba(255,255,255,.08), 0 10px 28px rgba(0,0,0,.35)}
-    #papillonDemo .key:active{transform:translateY(1px)}
+    #papillonDemo .key{position:relative; min-width:58px; height:64px; border-radius:12px; border:1px solid var(--key-border); background:var(--key); box-shadow:inset 0 -2px 0 rgba(255,255,255,.04); transition:background .45s ease, box-shadow .45s ease, transform .45s}
+    #papillonDemo .key:hover{
+  background:var(--key);
+  box-shadow:inset 0 -2px 0 rgba(255,255,255,.04);
+  filter:brightness(1.02);
+}
+#papillonDemo .key:active{
+  background:var(--key-hover);
+  box-shadow:0 0 12px rgba(255,255,255,.3), 0 10px 28px rgba(0,0,0,.45);
+  transform:translateY(3px);
+}
     #papillonDemo .key.wide{min-width:72px}
     #papillonDemo .key.bs{min-width:102px}
     #papillonDemo .key.space{min-width:360px; align-self:center;}
