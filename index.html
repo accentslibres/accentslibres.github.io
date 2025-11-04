@@ -725,7 +725,7 @@ Si la transformation n’est pas souhaitée, appuyez simplement une fois sur Ret
 
     function getPrimaryChar(keyEl){
       if (keyEl.classList.contains('space')) return ' ';
-      if (keyEl.id === 'enter') return '\\n';
+      if (keyEl.id === 'enter') return '\n';
       if (keyEl.id === 'shiftL' || keyEl.id === 'shiftR') return '{SHIFT}';
       if (keyEl.classList.contains('bs') || keyEl.textContent.trim().toLowerCase().includes('backspace')) return '{BS}';
       if (keyEl.classList.contains('arrow')){
